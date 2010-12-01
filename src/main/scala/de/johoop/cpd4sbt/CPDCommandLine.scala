@@ -29,7 +29,7 @@ trait CPDCommandLine extends DefaultProject
   }
 
   private lazy val cpdCallOptions = {
-    // TODO
-    List[String]()
+    List("--minimum-tokens", cpdMinimumTokens.toString,
+        "--language", cpdLanguage.toString)
   }
 }
