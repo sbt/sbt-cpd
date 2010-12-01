@@ -17,5 +17,5 @@ private[cpd4sbt] trait CPDDependencies extends DefaultProject {
   
   final lazy val cpdConfig = config("cpd") hide
   
-  val pmdDependency = "pmd" % "pmd" % "4.2.5" % "pmd->default" intransitive()
+  val pmdDependency = "pmd" % "pmd" % "4.2.5" % "cpd->default" intransitive()
 }
