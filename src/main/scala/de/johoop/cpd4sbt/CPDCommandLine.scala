@@ -12,6 +12,7 @@
 package de.johoop.cpd4sbt
 
 import sbt.DefaultProject
+import sbt.Path
 
 trait CPDCommandLine extends DefaultProject 
     with CPDProperties
@@ -22,13 +23,14 @@ trait CPDCommandLine extends DefaultProject
 
   private lazy val cpdJavaCall = {
     val cpdLibPath = configurationPath(cpdConfig)
-    val cpdClasspath = (cpdLibPath ** "*.jar").absString
+    val cpdClasspath = (cpdLibPath ** "*.jar").relativeString
 
     List("java", "-Xmx%dm".format(cpdMaxMemoryInMB),
         "-cp", cpdClasspath)
   }
 
   private lazy val cpdCallOptions = {
+    cpdSourcePaths.flatMap(path => List("--files", path.projectRelativePath)) ++
     List("--minimum-tokens", cpdMinimumTokens.toString,
         "--language", cpdLanguage.toString,
 	"--encoding", cpdEncoding,

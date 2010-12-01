@@ -1,6 +1,6 @@
 /*
  * This file is part of cpd4sbt.
- * 
+ *
  * Copyright (c) 2010 Joachim Hofer
  * All rights reserved.
  *
@@ -13,6 +13,6 @@ package de.johoop.cpd4sbt
 
 object CPDReportType extends Enumeration {
   type CPDReportType = Value
-  
+
   val Simple, VS, XML, CSV = Value
 }

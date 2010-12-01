@@ -11,16 +11,15 @@
  */
 package de.johoop.cpd4sbt
 
-import java.io.File
-import scala.xml.Node
-
 import sbt.Path
-import sbt.PathFinder
 
 trait CPDProperties {
 
   /** Output path for CPD reports. Defaults to <code>outputPath / "cpd"</code>. */
   protected val cpdOutputPath: Path
+
+  /** Paths of the source files to analyze. Defaults to the <code>mainSources</code>. */
+  protected val cpdSourcePaths: List[Path]
 
   /** Maximum amount of memory to allow for CPD (in MB). Defaults to <code>512</code>.*/
   protected lazy val cpdMaxMemoryInMB = 512
@@ -37,6 +36,4 @@ trait CPDProperties {
 
   /** Type of CPD report. Defaults to <code>XML</code>. */
   protected lazy val cpdReportType = CPDReportType.XML
-
-  // TODO
 }
