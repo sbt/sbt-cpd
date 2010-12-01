@@ -30,6 +30,8 @@ trait CPDCommandLine extends DefaultProject
 
   private lazy val cpdCallOptions = {
     List("--minimum-tokens", cpdMinimumTokens.toString,
-        "--language", cpdLanguage.toString)
+        "--language", cpdLanguage.toString,
+	"--encoding", cpdEncoding,
+	"--format", "net.sourceforge.pmd.cpd.%sRenderer".format(cpdReportType))
   }
 }

@@ -28,9 +28,15 @@ trait CPDProperties {
   /** Minimum number of tokens of potential duplicates. Defaults to <code>100</code>.*/
   protected lazy val cpdMinimumTokens = 100
 
+  /** Source file encoding. Defaults to <code>"utf-8"</code>. */
+  protected lazy val cpdEncoding = "utf-8"
+
   /** Language to analyze. Defaults to <code>Java</code>. 
     * If you want Scala, extend the CPD tokenizers (or try <code>Any</code>)! */
   protected lazy val cpdLanguage = CPDLanguage.Java
+
+  /** Type of CPD report. Defaults to <code>XML</code>. */
+  protected lazy val cpdReportType = CPDReportType.XML
 
   // TODO
 }
