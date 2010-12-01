@@ -17,5 +17,19 @@ trait CPDCommandLine extends DefaultProject
     with CPDProperties
     with CPDDependencies {
 
-  // TODO
+  private[cpd4sbt] def cpdCommandLine() = 
+      cpdJavaCall ++ cpdCallOptions
+
+  private lazy val cpdJavaCall = {
+    val cpdLibPath = configurationPath(cpdConfig)
+    val cpdClasspath = (cpdLibPath ** "*.jar").absString
+
+    List("java", "-Xmx%dm".format(cpdMaxMemoryInMB),
+        "-cp", cpdClasspath)
+  }
+
+  private lazy val cpdCallOptions = {
+    // TODO
+    List[String]()
+  }
 }
