@@ -19,6 +19,9 @@ trait CPDProperties {
   /** Output path for CPD reports. Defaults to <code>outputPath / "cpd"</code>. */
   protected val cpdOutputPath: Path
 
+  /** Name of the report file to generate. Defaults to <code>"cpd.xml"</code> */
+  protected lazy val cpdReportName = "cpd.xml"
+
   /** Paths of the source files to analyze. Defaults to <code>List(mainSourcePath)</code>. */
   protected val cpdSourcePaths: List[Path]
 
@@ -29,7 +32,10 @@ trait CPDProperties {
   protected lazy val cpdMinimumTokens = 100
 
   /** Source file encoding. Defaults to <code>"utf-8"</code>. */
-  protected lazy val cpdEncoding = "utf-8"
+  protected lazy val cpdSourceEncoding = "utf-8"
+
+  /** Output file encoding. Defaults to <code>"utf-8"</code>. */
+  protected lazy val cpdOutputEncoding = "utf-8"
 
   /** Language to analyze. Defaults to <code>Java</code>. 
     * If you want Scala, extend the CPD tokenizers (or try <code>Any</code>)! */

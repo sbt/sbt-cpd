@@ -19,13 +19,14 @@ trait CPDCommandLine extends DefaultProject
     with CPDDependencies {
 
   private[cpd4sbt] def cpdCommandLine() = 
-      cpdJavaCall ++ cpdCallOptions
+      cpdJavaCall ++ cpdCallOptions ++ List(">%s".format(cpdOutputPath / cpdReportFilename))
 
   private lazy val cpdJavaCall = {
     val cpdLibPath = configurationPath(cpdConfig)
     val cpdClasspath = (cpdLibPath ** "*.jar").relativeString
 
     List("java", "-Xmx%dm".format(cpdMaxMemoryInMB),
+        "-Dfile.encoding=%s".format(cpdOutputEncoding),
         "-cp", cpdClasspath, "net.sourceforge.pmd.cpd.CPD")
   }
 
@@ -33,7 +34,7 @@ trait CPDCommandLine extends DefaultProject
     cpdSourcePaths.flatMap(path => List("--files", path.projectRelativePath)) ++
     List("--minimum-tokens", cpdMinimumTokens.toString,
         "--language", cpdLanguage.toString,
-	"--encoding", cpdEncoding,
+	"--encoding", cpdSourceEncoding,
 	"--format", "net.sourceforge.pmd.cpd.%sRenderer".format(cpdReportType))
   }
 }
