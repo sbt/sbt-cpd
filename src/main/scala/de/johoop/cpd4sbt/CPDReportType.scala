@@ -14,5 +14,8 @@ package de.johoop.cpd4sbt
 object CPDReportType extends Enumeration {
   type CPDReportType = Value
 
-  val Simple, VS, XML, CSV = Value
+  val Simple = Value("Simple")
+  val VS = Value("VS")
+  val XML = Value("XML")
+  val CSV = Value("CSV")
 }
