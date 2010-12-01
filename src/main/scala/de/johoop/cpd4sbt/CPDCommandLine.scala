@@ -21,8 +21,6 @@ trait CPDCommandLine extends DefaultProject
   private[cpd4sbt] def cpdCommandLine() = 
       cpdJavaCall ++ cpdCallOptions 
   
-  // FIXME use "#>" instead of this " ++ List(">%s".format(cpdOutputPath / cpdReportName))"
-
   private lazy val cpdJavaCall = {
     val cpdLibPath = configurationPath(cpdConfig)
     val cpdClasspath = (cpdLibPath ** "*.jar").relativeString

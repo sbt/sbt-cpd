@@ -16,7 +16,7 @@ import sbt._
 private[cpd4sbt] trait CommandLineExecutor extends DefaultProject with CPDProperties {
   private[cpd4sbt] def executeCPDCommandLine(commandLine: List[String]) = try {
     log.debug(commandLine mkString "\n")
-    val exitValue = Process(commandLine) #> (cpdOutputPath / cpdReportName).asFile
+    val exitValue = Process(commandLine) #> (cpdOutputPath / cpdReportName).asFile ! log
     if (exitValue == 0) None else Some("Nonzero exit value: " + exitValue)
       
   } catch {
