@@ -14,7 +14,7 @@ package de.johoop.cpd4sbt
 import sbt._
 
 private[cpd4sbt] trait CommandLineExecutor extends DefaultProject {
-  private[cpd4sbt] def executeCommandLine(commandLine: List[String]) = try {
+  private[cpd4sbt] def executeCPDCommandLine(commandLine: List[String]) = try {
     log.debug(commandLine mkString "\n")
     val exitValue = Process(commandLine) ! log
     if (exitValue == 0) None else Some("Nonzero exit value: " + exitValue)

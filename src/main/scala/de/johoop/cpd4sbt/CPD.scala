@@ -32,6 +32,6 @@ trait CPD extends DefaultProject
   protected def cpdAction = task {
     createDirectory(cpdOutputPath, log)
     val commandLine = cpdCommandLine() 
-    executeCommandLine(commandLine)
+    executeCPDCommandLine(commandLine)
   }
 }
