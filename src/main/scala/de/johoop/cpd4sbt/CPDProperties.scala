@@ -12,6 +12,7 @@
 package de.johoop.cpd4sbt
 
 import sbt.Path
+import sbt.PathFinder
 
 trait CPDProperties {
 
@@ -19,7 +20,7 @@ trait CPDProperties {
   protected val cpdOutputPath: Path
 
   /** Paths of the source files to analyze. Defaults to the <code>mainSources</code>. */
-  protected val cpdSourcePaths: List[Path]
+  protected val cpdSourcePaths: PathFinder
 
   /** Maximum amount of memory to allow for CPD (in MB). Defaults to <code>512</code>.*/
   protected lazy val cpdMaxMemoryInMB = 512
