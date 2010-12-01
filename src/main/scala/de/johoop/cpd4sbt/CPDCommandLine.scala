@@ -30,7 +30,7 @@ trait CPDCommandLine extends DefaultProject
   }
 
   private lazy val cpdCallOptions = {
-    cpdSourcePaths.get.flatMap(path => List("--files", path.projectRelativePath)) ++
+    cpdSourcePaths.flatMap(path => List("--files", path.projectRelativePath)) ++
     List("--minimum-tokens", cpdMinimumTokens.toString,
         "--language", cpdLanguage.toString,
 	"--encoding", cpdEncoding,

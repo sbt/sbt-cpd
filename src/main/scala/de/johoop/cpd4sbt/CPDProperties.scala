@@ -19,8 +19,8 @@ trait CPDProperties {
   /** Output path for CPD reports. Defaults to <code>outputPath / "cpd"</code>. */
   protected val cpdOutputPath: Path
 
-  /** Paths of the source files to analyze. Defaults to the <code>mainSources</code>. */
-  protected val cpdSourcePaths: PathFinder
+  /** Paths of the source files to analyze. Defaults to <code>List(mainSourcePath)</code>. */
+  protected val cpdSourcePaths: List[Path]
 
   /** Maximum amount of memory to allow for CPD (in MB). Defaults to <code>512</code>.*/
   protected lazy val cpdMaxMemoryInMB = 512

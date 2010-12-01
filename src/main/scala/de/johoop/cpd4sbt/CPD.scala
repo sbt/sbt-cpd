@@ -24,7 +24,7 @@ trait CPD extends DefaultProject
     with CPDCommandLine {
 
   override lazy val cpdOutputPath = outputPath / "cpd"
-  override lazy val cpdSourcePaths = mainSources
+  override lazy val cpdSourcePaths = List(mainSourcePath)
 
   final lazy val cpd = cpdAction
 
