@@ -26,7 +26,7 @@ trait CPDCommandLine extends DefaultProject
     val cpdClasspath = (cpdLibPath ** "*.jar").relativeString
 
     List("java", "-Xmx%dm".format(cpdMaxMemoryInMB),
-        "-cp", cpdClasspath)
+        "-cp", cpdClasspath, "net.sourceforge.pmd.cpd.CPD")
   }
 
   private lazy val cpdCallOptions = {
