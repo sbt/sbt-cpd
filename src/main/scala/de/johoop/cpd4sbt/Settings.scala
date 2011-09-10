@@ -53,14 +53,11 @@ private[cpd4sbt] trait Settings extends Plugin {
   
   val cpd = TaskKey[Unit]("cpd")
   
-  protected def cpdAction
-
+  protected def cpdAction(streams: TaskStreams)
 
   val cpdSettings = Seq(
       ivyConfigurations += cpdConfig,
       libraryDependencies += "pmd" % "pmd" % "4.2.5" % "cpd->default" intransitive(),
-      
-      cpd := cpdAction,
       
       cpdTargetPath <<= (crossTarget) { _ / "cpd" },
       cpdSourceDirectories <<= unmanagedSourceDirectories,
@@ -71,6 +68,7 @@ private[cpd4sbt] trait Settings extends Plugin {
       cpdSourceEncoding := "utf-8",
       cpdReportFileEncoding := "utf-8",
       cpdLanguage := Language.Any,
-      cpdReportType := ReportType.XML)
+      cpdReportType := ReportType.XML,
+      
+      cpd <<= streams map cpdAction)
 }
-

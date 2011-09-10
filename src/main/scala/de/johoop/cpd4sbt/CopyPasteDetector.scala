@@ -18,8 +18,10 @@ import java.io.File
 import sbt._
 import Keys.TaskStreams
 
-object FindBugs extends Plugin with Settings {
-  def cpdAction = println("Hello, CPD!")
+object CopyPasteDetector extends Plugin with Settings {
+  def cpdAction(streams: TaskStreams) = {
+    streams.log.info("Hello, CPD!")
+  }
 }
 
 //  override def cpdTask(commandLine: List[String], streams: TaskStreams): Unit = {
@@ -39,3 +41,24 @@ object FindBugs extends Plugin with Settings {
 //    executeCPDCommandLine(commandLine)
 //  }
 //}
+
+//  private[cpd4sbt] def cpdCommandLine() = 
+//      cpdJavaCall ++ cpdCallOptions 
+//  
+//  private lazy val cpdJavaCall = {
+//    val cpdLibPath = configurationPath(cpdConfig)
+//    val cpdClasspath = (cpdLibPath ** "*.jar").relativeString
+//
+//    List("java", "-Xmx%dm".format(cpdMaxMemoryInMB),
+//        "-Dfile.encoding=%s".format(cpdOutputEncoding),
+//        "-cp", cpdClasspath, "net.sourceforge.pmd.cpd.CPD")
+//  }
+//
+//  private lazy val cpdCallOptions = {
+//    cpdSourcePaths.flatMap(path => List("--files", path.projectRelativePath)) ++
+//    List("--minimum-tokens", cpdMinimumTokens.toString,
+//        "--language", cpdLanguage.toString,
+//  "--encoding", cpdSourceEncoding,
+//  "--format", "net.sourceforge.pmd.cpd.%sRenderer".format(cpdReportType))
+//  }
+
