@@ -17,24 +17,25 @@ import sbt._
 import Keys._
 
 object CopyPasteDetector extends Plugin with Settings {
+  
   def cpdAction(reportSettings: ReportSettings, sourceSettings: SourceSettings, maxMem: Int, 
       classpath: Classpath, streams: TaskStreams) {
     
     IO createDirectory reportSettings.path
     
-    val cpdClasspath = PathFinder(classpath.files).absString
-
     val commandLine = List("java", 
         "-Xmx%dm" format maxMem, 
         "-Dfile.encoding=%s" format reportSettings.encoding,
-        "-cp", cpdClasspath, 
+        "-cp", PathFinder(classpath.files).absString, 
         "net.sourceforge.pmd.cpd.CPD",
-        "--minimum-tokens", sourceSettings.minTokens,
+        "--minimum-tokens", sourceSettings.minTokens.toString,
         "--language", sourceSettings.language.toString,
         "--encoding", sourceSettings.encoding,
         "--format", "net.sourceforge.pmd.cpd.%sRenderer" format reportSettings.format) ++
-        sourceSettings.dirs flatMap (List("--files", _))
+        sourceSettings.dirs.flatMap(file => List("--files", file.getPath))
     
     streams.log debug "Executing: %s".format(commandLine mkString "\n")
+    
+    val exitValue = Process(commandLine) ! streams.log
   }
 }
