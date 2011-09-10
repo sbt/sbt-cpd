@@ -11,49 +11,30 @@
  */
 package de.johoop.cpd4sbt
 
-import scala.xml._
-
 import java.io.File
 
 import sbt._
-import Keys.TaskStreams
+import Keys._
 
 object CopyPasteDetector extends Plugin with Settings {
-  def cpdAction(reportSettings: ReportSettings, sourceSettings: SourceSettings, maxMem: Int, streams: TaskStreams) {
+  def cpdAction(reportSettings: ReportSettings, sourceSettings: SourceSettings, maxMem: Int, 
+      classpath: Classpath, streams: TaskStreams) {
+    
     IO createDirectory reportSettings.path
-    streams.log info "Hello, CPD!"
+    
+    val cpdClasspath = PathFinder(classpath.files).absString
+
+    val commandLine = List("java", 
+        "-Xmx%dm" format maxMem, 
+        "-Dfile.encoding=%s" format reportSettings.encoding,
+        "-cp", cpdClasspath, 
+        "net.sourceforge.pmd.cpd.CPD",
+        "--minimum-tokens", sourceSettings.minTokens,
+        "--language", sourceSettings.language.toString,
+        "--encoding", sourceSettings.encoding,
+        "--format", "net.sourceforge.pmd.cpd.%sRenderer" format reportSettings.format) ++
+        sourceSettings.dirs flatMap (List("--files", _))
+    
+    streams.log debug "Executing: %s".format(commandLine mkString "\n")
   }
 }
-
-//  override def cpdTask(commandLine: List[String], streams: TaskStreams): Unit = {
-//    streams.log.debug("CPD command line to execute: \"%s\"" format (commandLine mkString " "))
-    
-//    executeCommandLine(commandLine, streams.log)
-
-//  /** Override this in order to change the behaviour of the cpd task. */
-//  protected def cpdAction = task {
-//    val commandLine = cpdCommandLine() 
-//    executeCPDCommandLine(commandLine)
-//  }
-//}
-
-//  private[cpd4sbt] def cpdCommandLine() = 
-//      cpdJavaCall ++ cpdCallOptions 
-//  
-//  private lazy val cpdJavaCall = {
-//    val cpdLibPath = configurationPath(cpdConfig)
-//    val cpdClasspath = (cpdLibPath ** "*.jar").relativeString
-//
-//    List("java", "-Xmx%dm".format(cpdMaxMemoryInMB),
-//        "-Dfile.encoding=%s".format(cpdOutputEncoding),
-//        "-cp", cpdClasspath, "net.sourceforge.pmd.cpd.CPD")
-//  }
-//
-//  private lazy val cpdCallOptions = {
-//    cpdSourcePaths.flatMap(path => List("--files", path.projectRelativePath)) ++
-//    List("--minimum-tokens", cpdMinimumTokens.toString,
-//        "--language", cpdLanguage.toString,
-//  "--encoding", cpdSourceEncoding,
-//  "--format", "net.sourceforge.pmd.cpd.%sRenderer".format(cpdReportType))
-//  }
-

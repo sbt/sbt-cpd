@@ -60,7 +60,7 @@ private[cpd4sbt] trait Settings extends Plugin {
   val cpd = TaskKey[Unit]("cpd")
   
   protected def cpdAction(reportSettings: ReportSettings, sourceSettings: SourceSettings, 
-      maxMem: Int, streams: TaskStreams)
+      maxMem: Int, classpath: Classpath, streams: TaskStreams)
 
   val cpdSettings = Seq(
       ivyConfigurations += cpdConfig,
@@ -79,6 +79,9 @@ private[cpd4sbt] trait Settings extends Plugin {
   
       cpdReportSettings <<= (cpdTargetPath, cpdReportName, cpdReportFileEncoding, cpdReportType) map (ReportSettings(_, _, _, _)),
       cpdSourceSettings <<= (cpdSourceDirectories, cpdSourceEncoding, cpdLanguage, cpdMinimumTokens) map (SourceSettings(_, _, _, _)),
+  
+      managedClasspath in cpd <<= (classpathTypes, update) map { 
+        (ct, updateReport) => Classpaths managedJars (cpdConfig, ct, updateReport) },
       
-      cpd <<= (cpdReportSettings, cpdSourceSettings, cpdMaxMemoryInMB, streams) map cpdAction)
+      cpd <<= (cpdReportSettings, cpdSourceSettings, cpdMaxMemoryInMB, managedClasspath, streams) map cpdAction)
 }
