@@ -23,6 +23,9 @@ import java.io.File
 private[cpd4sbt] trait Settings extends Plugin {
   private val cpdConfig = config("cpd") hide  
 
+  /** Source files to analyze. Defaults to <code>unmanagedSourceDirectories</code>. */
+  val cpdSourceDirectories = SettingKey[Seq[File]]("cpd-source-directories")
+  
   /** Output path for CPD reports. Defaults to <code>target / "cpd"</code>. */
   val cpdTargetPath = SettingKey[File]("cpd-target-path")
 
@@ -60,6 +63,8 @@ private[cpd4sbt] trait Settings extends Plugin {
       cpd := cpdAction,
       
       cpdTargetPath <<= (crossTarget) { _ / "cpd" },
+      cpdSourceDirectories <<= unmanagedSourceDirectories,
+      
       cpdReportName := "cpd.xml",
       cpdMaxMemoryInMB := 512,
       cpdMinimumTokens := 100,
@@ -69,5 +74,3 @@ private[cpd4sbt] trait Settings extends Plugin {
       cpdReportType := ReportType.XML)
 }
 
-//  /** Paths of the source files to analyze. Defaults to <code>List(mainSourcePath)</code>. */
-//  protected val cpdSourcePaths: List[Path]
