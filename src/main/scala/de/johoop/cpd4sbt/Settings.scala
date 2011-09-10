@@ -15,6 +15,9 @@ import sbt._
 import Keys._
 import Project.Initialize
 
+import Language._
+import ReportType._
+
 import java.io.File
 
 private[cpd4sbt] trait Settings extends Plugin {
@@ -38,6 +41,13 @@ private[cpd4sbt] trait Settings extends Plugin {
   /** Source file encoding. Defaults to <code>"utf-8"</code>. */
   val cpdSourceEncoding = SettingKey[String]("cpd-source-encoding")
   
+  /** Language to analyze. Defaults to <code>Any</code>. 
+    * If you want Scala, extend the CPD tokenizers (or try <code>Any</code>)! */
+  val cpdLanguage = SettingKey[Language]("cpd-language")
+
+  /** Type of CPD report. Defaults to <code>XML</code>. */
+  val cpdReportType = SettingKey[ReportType]("cpd-report-type")
+  
   val cpd = TaskKey[Unit]("cpd")
   
   protected def cpdAction
@@ -54,15 +64,10 @@ private[cpd4sbt] trait Settings extends Plugin {
       cpdMaxMemoryInMB := 512,
       cpdMinimumTokens := 100,
       cpdSourceEncoding := "utf-8",
-      cpdReportFileEncoding := "utf-8")
+      cpdReportFileEncoding := "utf-8",
+      cpdLanguage := Language.Any,
+      cpdReportType := ReportType.XML)
 }
 
 //  /** Paths of the source files to analyze. Defaults to <code>List(mainSourcePath)</code>. */
 //  protected val cpdSourcePaths: List[Path]
-//
-//  /** Language to analyze. Defaults to <code>Java</code>. 
-//    * If you want Scala, extend the CPD tokenizers (or try <code>Any</code>)! */
-//  protected lazy val cpdLanguage = CPDLanguage.Java
-//
-//  /** Type of CPD report. Defaults to <code>XML</code>. */
-//  protected lazy val cpdReportType = CPDReportType.XML

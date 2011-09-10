@@ -1,6 +1,6 @@
 /*
  * This file is part of cpd4sbt.
- * 
+ *
  * Copyright (c) 2010, 2011 Joachim Hofer
  * All rights reserved.
  *
@@ -11,16 +11,11 @@
  */
 package de.johoop.cpd4sbt
 
-object CPDLanguage extends Enumeration {
-  type CPDLanguage = Value
+object ReportType extends Enumeration {
+  type ReportType = Value
 
-  val Java = Value("java")
-  val CPP = Value("cpp")
-  val PHP = Value("php")
-  val Ruby = Value("ruby")
-  val Fortran = Value("fortran")
-  val ECMAScript = Value("ecmascript")
-  val JavaScript = Value("ecmascript")
-  val Any = Value("any")
-  val JSP = Value("jsp")
+  val Simple = Value("Simple")
+  val VS = Value("VS")
+  val XML = Value("XML")
+  val CSV = Value("CSV")
 }
