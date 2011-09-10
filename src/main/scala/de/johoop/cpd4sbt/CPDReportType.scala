@@ -1,7 +1,7 @@
 /*
  * This file is part of cpd4sbt.
  *
- * Copyright (c) 2010 Joachim Hofer
+ * Copyright (c) 2010, 2011 Joachim Hofer
  * All rights reserved.
  *
  * This program and the accompanying materials

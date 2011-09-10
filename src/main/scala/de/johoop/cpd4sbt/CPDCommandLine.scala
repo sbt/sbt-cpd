@@ -1,7 +1,7 @@
 /*
  * This file is part of cpd4sbt.
  * 
- * Copyright (c) 2010 Joachim Hofer
+ * Copyright (c) 2010, 2011 Joachim Hofer
  * All rights reserved.
  *
  * This program and the accompanying materials
@@ -11,30 +11,28 @@
  */
 package de.johoop.cpd4sbt
 
-import sbt.DefaultProject
-import sbt.Path
+import sbt._
+import Keys._
 
-trait CPDCommandLine extends DefaultProject 
-    with CPDProperties
-    with CPDDependencies {
+trait CPDCommandLine extends Plugin {
 
-  private[cpd4sbt] def cpdCommandLine() = 
-      cpdJavaCall ++ cpdCallOptions 
-  
-  private lazy val cpdJavaCall = {
-    val cpdLibPath = configurationPath(cpdConfig)
-    val cpdClasspath = (cpdLibPath ** "*.jar").relativeString
-
-    List("java", "-Xmx%dm".format(cpdMaxMemoryInMB),
-        "-Dfile.encoding=%s".format(cpdOutputEncoding),
-        "-cp", cpdClasspath, "net.sourceforge.pmd.cpd.CPD")
-  }
-
-  private lazy val cpdCallOptions = {
-    cpdSourcePaths.flatMap(path => List("--files", path.projectRelativePath)) ++
-    List("--minimum-tokens", cpdMinimumTokens.toString,
-        "--language", cpdLanguage.toString,
-	"--encoding", cpdSourceEncoding,
-	"--format", "net.sourceforge.pmd.cpd.%sRenderer".format(cpdReportType))
-  }
+//  private[cpd4sbt] def cpdCommandLine() = 
+//      cpdJavaCall ++ cpdCallOptions 
+//  
+//  private lazy val cpdJavaCall = {
+//    val cpdLibPath = configurationPath(cpdConfig)
+//    val cpdClasspath = (cpdLibPath ** "*.jar").relativeString
+//
+//    List("java", "-Xmx%dm".format(cpdMaxMemoryInMB),
+//        "-Dfile.encoding=%s".format(cpdOutputEncoding),
+//        "-cp", cpdClasspath, "net.sourceforge.pmd.cpd.CPD")
+//  }
+//
+//  private lazy val cpdCallOptions = {
+//    cpdSourcePaths.flatMap(path => List("--files", path.projectRelativePath)) ++
+//    List("--minimum-tokens", cpdMinimumTokens.toString,
+//        "--language", cpdLanguage.toString,
+//	"--encoding", cpdSourceEncoding,
+//	"--format", "net.sourceforge.pmd.cpd.%sRenderer".format(cpdReportType))
+//  }
 }
