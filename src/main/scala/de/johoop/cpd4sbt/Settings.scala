@@ -22,6 +22,21 @@ private[cpd4sbt] trait Settings extends Plugin {
 
   /** Output path for CPD reports. Defaults to <code>target / "cpd"</code>. */
   val cpdTargetPath = SettingKey[File]("cpd-target-path")
+
+  /** Name of the report file to generate. Defaults to <code>"cpd.xml"</code> */
+  val cpdReportName = SettingKey[String]("cpd-report-name")
+
+  /** Report file encoding. Defaults to <code>"utf-8"</code>. */
+  val cpdReportFileEncoding = SettingKey[String]("cpd-report-file-encoding")
+  
+  /** Maximum amount of memory to allow for CPD (in MB). Defaults to <code>512</code>.*/
+  val cpdMaxMemoryInMB = SettingKey[Int]("cpd-max-memory-in-mb")
+  
+  /** Minimum number of tokens of potential duplicates. Defaults to <code>100</code>.*/
+  val cpdMinimumTokens = SettingKey[Int]("cpd-minimum-tokens")
+
+  /** Source file encoding. Defaults to <code>"utf-8"</code>. */
+  val cpdSourceEncoding = SettingKey[String]("cpd-source-encoding")
   
   val cpd = TaskKey[Unit]("cpd")
   
@@ -34,29 +49,16 @@ private[cpd4sbt] trait Settings extends Plugin {
       
       cpd := cpdAction,
       
-      cpdTargetPath <<= (crossTarget) { _ / "cpd" })
+      cpdTargetPath <<= (crossTarget) { _ / "cpd" },
+      cpdReportName := "cpd.xml",
+      cpdMaxMemoryInMB := 512,
+      cpdMinimumTokens := 100,
+      cpdSourceEncoding := "utf-8",
+      cpdReportFileEncoding := "utf-8")
 }
 
-//  /** Output path for CPD reports. Defaults to <code>outputPath / "cpd"</code>. */
-//  protected val cpdOutputPath: Path
-//
-//  /** Name of the report file to generate. Defaults to <code>"cpd.xml"</code> */
-//  protected lazy val cpdReportName = "cpd.xml"
-//
 //  /** Paths of the source files to analyze. Defaults to <code>List(mainSourcePath)</code>. */
 //  protected val cpdSourcePaths: List[Path]
-//
-//  /** Maximum amount of memory to allow for CPD (in MB). Defaults to <code>512</code>.*/
-//  protected lazy val cpdMaxMemoryInMB = 512
-//
-//  /** Minimum number of tokens of potential duplicates. Defaults to <code>100</code>.*/
-//  protected lazy val cpdMinimumTokens = 100
-//
-//  /** Source file encoding. Defaults to <code>"utf-8"</code>. */
-//  protected lazy val cpdSourceEncoding = "utf-8"
-//
-//  /** Output file encoding. Defaults to <code>"utf-8"</code>. */
-//  protected lazy val cpdOutputEncoding = "utf-8"
 //
 //  /** Language to analyze. Defaults to <code>Java</code>. 
 //    * If you want Scala, extend the CPD tokenizers (or try <code>Any</code>)! */

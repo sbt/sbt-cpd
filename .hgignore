@@ -1,6 +1,7 @@
 syntax: regexp
 
 ^\.history$
+^\.target$
 ^\.classpath$
 ^\.project$
 ^bin$
