@@ -19,8 +19,9 @@ import sbt._
 import Keys.TaskStreams
 
 object CopyPasteDetector extends Plugin with Settings {
-  def cpdAction(streams: TaskStreams) = {
-    streams.log.info("Hello, CPD!")
+  def cpdAction(reportSettings: ReportSettings, sourceSettings: SourceSettings, maxMem: Int, streams: TaskStreams) {
+    IO createDirectory reportSettings.path
+    streams.log info "Hello, CPD!"
   }
 }
 
@@ -29,14 +30,8 @@ object CopyPasteDetector extends Plugin with Settings {
     
 //    executeCommandLine(commandLine, streams.log)
 
-//  override lazy val cpdOutputPath = outputPath / "cpd"
-//  override lazy val cpdSourcePaths = List(mainSourcePath)
-//
-//  final lazy val cpd = cpdAction
-//
 //  /** Override this in order to change the behaviour of the cpd task. */
 //  protected def cpdAction = task {
-//    createDirectory(cpdOutputPath, log)
 //    val commandLine = cpdCommandLine() 
 //    executeCPDCommandLine(commandLine)
 //  }

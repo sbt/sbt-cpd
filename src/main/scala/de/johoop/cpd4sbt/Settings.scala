@@ -51,9 +51,16 @@ private[cpd4sbt] trait Settings extends Plugin {
   /** Type of CPD report. Defaults to <code>XML</code>. */
   val cpdReportType = SettingKey[ReportType]("cpd-report-type")
   
+  private[cpd4sbt] case class ReportSettings(path: File, name: String, encoding: String, format: ReportType)
+  val cpdReportSettings = TaskKey[ReportSettings]("cpd-report-settings")
+
+  private[cpd4sbt] case class SourceSettings(dirs: Seq[File], encoding: String, language: Language, minTokens: Int)
+  val cpdSourceSettings = TaskKey[SourceSettings]("cpd-source-settings")
+  
   val cpd = TaskKey[Unit]("cpd")
   
-  protected def cpdAction(streams: TaskStreams)
+  protected def cpdAction(reportSettings: ReportSettings, sourceSettings: SourceSettings, 
+      maxMem: Int, streams: TaskStreams)
 
   val cpdSettings = Seq(
       ivyConfigurations += cpdConfig,
@@ -69,6 +76,9 @@ private[cpd4sbt] trait Settings extends Plugin {
       cpdReportFileEncoding := "utf-8",
       cpdLanguage := Language.Any,
       cpdReportType := ReportType.XML,
+  
+      cpdReportSettings <<= (cpdTargetPath, cpdReportName, cpdReportFileEncoding, cpdReportType) map (ReportSettings(_, _, _, _)),
+      cpdSourceSettings <<= (cpdSourceDirectories, cpdSourceEncoding, cpdLanguage, cpdMinimumTokens) map (SourceSettings(_, _, _, _)),
       
-      cpd <<= streams map cpdAction)
+      cpd <<= (cpdReportSettings, cpdSourceSettings, cpdMaxMemoryInMB, streams) map cpdAction)
 }
