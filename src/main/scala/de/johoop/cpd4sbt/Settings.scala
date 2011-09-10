@@ -44,8 +44,10 @@ private[cpd4sbt] trait Settings extends Plugin {
   /** Source file encoding. Defaults to <code>"utf-8"</code>. */
   val cpdSourceEncoding = SettingKey[String]("cpd-source-encoding")
   
-  /** Language to analyze. Defaults to <code>Any</code>. 
-    * If you want Scala, extend the CPD tokenizers (or try <code>Any</code>)! */
+  /** Language to analyze. Defaults to <code>Scala</code>. 
+    * Note: There's currently no specific Scala tokenizer implemented in CPD. Using Scala
+    * as language will default to the "AnyLanguage" tokenizer. If you want Scala specifically, 
+    * extend the CPD tokenizers! */
   val cpdLanguage = SettingKey[Language]("cpd-language")
 
   /** Type of CPD report. Defaults to <code>XML</code>. */
@@ -57,6 +59,8 @@ private[cpd4sbt] trait Settings extends Plugin {
   private[cpd4sbt] case class SourceSettings(dirs: Seq[File], encoding: String, language: Language, minTokens: Int)
   val cpdSourceSettings = TaskKey[SourceSettings]("cpd-source-settings")
   
+  val cpdClasspath = TaskKey[Classpath]("cpd-classpath")
+  
   val cpd = TaskKey[Unit]("cpd")
   
   protected def cpdAction(reportSettings: ReportSettings, sourceSettings: SourceSettings, 
@@ -67,21 +71,22 @@ private[cpd4sbt] trait Settings extends Plugin {
       libraryDependencies += "pmd" % "pmd" % "4.2.5" % "cpd->default" intransitive(),
       
       cpdTargetPath <<= (crossTarget) { _ / "cpd" },
-      cpdSourceDirectories <<= unmanagedSourceDirectories,
+      cpdSourceDirectories in Compile <<= unmanagedSourceDirectories in Compile,
       
       cpdReportName := "cpd.xml",
       cpdMaxMemoryInMB := 512,
       cpdMinimumTokens := 100,
       cpdSourceEncoding := "utf-8",
       cpdReportFileEncoding := "utf-8",
-      cpdLanguage := Language.Any,
+      cpdLanguage := Language.Scala,
       cpdReportType := ReportType.XML,
   
-      cpdReportSettings <<= (cpdTargetPath, cpdReportName, cpdReportFileEncoding, cpdReportType) map (ReportSettings(_, _, _, _)),
-      cpdSourceSettings <<= (cpdSourceDirectories, cpdSourceEncoding, cpdLanguage, cpdMinimumTokens) map (SourceSettings(_, _, _, _)),
-  
-      managedClasspath in cpd <<= (classpathTypes, update) map { 
-        (ct, updateReport) => Classpaths managedJars (cpdConfig, ct, updateReport) },
+      cpdSourceSettings <<= cpdSourceSettings.dependsOn(compile in Compile),
       
-      cpd <<= (cpdReportSettings, cpdSourceSettings, cpdMaxMemoryInMB, managedClasspath, streams) map cpdAction)
+      cpdReportSettings <<= (cpdTargetPath, cpdReportName, cpdReportFileEncoding, cpdReportType) map (ReportSettings(_, _, _, _)),
+      cpdSourceSettings <<= (cpdSourceDirectories in Compile, cpdSourceEncoding, cpdLanguage, cpdMinimumTokens) map (SourceSettings(_, _, _, _)),
+  
+      cpdClasspath <<= (classpathTypes, update) map { Classpaths managedJars (cpdConfig, _, _) },
+      
+      cpd <<= (cpdReportSettings, cpdSourceSettings, cpdMaxMemoryInMB, cpdClasspath, streams) map cpdAction)
 }

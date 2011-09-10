@@ -15,12 +15,13 @@ object Language extends Enumeration {
   type Language = Value
 
   val Java = Value("java")
+  val C = Value("c")
   val CPP = Value("cpp")
   val PHP = Value("php")
   val Ruby = Value("ruby")
   val Fortran = Value("fortran")
   val ECMAScript = Value("ecmascript")
   val JavaScript = Value("ecmascript")
-  val Any = Value("any")
   val JSP = Value("jsp")
+  val Scala = Value("scala")
 }

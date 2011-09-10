@@ -32,10 +32,10 @@ object CopyPasteDetector extends Plugin with Settings {
         "--language", sourceSettings.language.toString,
         "--encoding", sourceSettings.encoding,
         "--format", "net.sourceforge.pmd.cpd.%sRenderer" format reportSettings.format) ++
-        sourceSettings.dirs.flatMap(file => List("--files", file.getPath))
+        sourceSettings.dirs.filter(_.isDirectory).flatMap(file => List("--files", file.getPath))
     
     streams.log debug "Executing: %s".format(commandLine mkString "\n")
     
-    val exitValue = Process(commandLine) ! streams.log
+    Process(commandLine) ! streams.log
   }
 }
