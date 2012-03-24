@@ -2,6 +2,7 @@ syntax: regexp
 
 ^\.history$
 ^\.target$
+^\.cache$
 ^\.classpath$
 ^\.project$
 ^bin$
@@ -13,3 +14,4 @@ syntax: regexp
 ^project/target$
 ^project/plugins/project$
 ^project/plugins/target$
+^project/project/target$
