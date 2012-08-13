@@ -1,7 +1,7 @@
 /*
  * This file is part of cpd4sbt.
  * 
- * Copyright (c) 2010, 2011 Joachim Hofer
+ * Copyright (c) 2010-2012 Joachim Hofer
  * All rights reserved.
  *
  * This program and the accompanying materials
@@ -68,7 +68,7 @@ private[cpd4sbt] trait Settings extends Plugin {
 
   val cpdSettings = Seq(
       ivyConfigurations += cpdConfig,
-      libraryDependencies += "net.sourceforge.pmd" % "pmd" % "5.0.0" % "cpd->default" intransitive(),
+      libraryDependencies += "net.sourceforge.pmd" % "pmd" % "5.0.0" % "cpd->default",
       
       cpdTargetPath <<= (crossTarget) { _ / "cpd" },
       cpdSourceDirectories in Compile <<= unmanagedSourceDirectories in Compile,
