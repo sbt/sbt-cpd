@@ -1,7 +1,7 @@
 /*
  * This file is part of cpd4sbt.
  * 
- * Copyright (c) 2010-2012 Joachim Hofer
+ * Copyright (c) 2010-2013 Joachim Hofer
  * All rights reserved.
  *
  * This program and the accompanying materials
@@ -70,7 +70,7 @@ private[cpd4sbt] trait Settings extends Plugin {
       ivyConfigurations += cpdConfig,
       libraryDependencies += "net.sourceforge.pmd" % "pmd" % "5.0.0" % "cpd->default",
       
-      cpdTargetPath <<= (crossTarget) { _ / "cpd" },
+      cpdTargetPath := crossTarget.value / "cpd",
       cpdSourceDirectories in Compile <<= unmanagedSourceDirectories in Compile,
       
       cpdReportName := "cpd.xml",
@@ -78,15 +78,15 @@ private[cpd4sbt] trait Settings extends Plugin {
       cpdMinimumTokens := 100,
       cpdSourceEncoding := "utf-8",
       cpdReportFileEncoding := "utf-8",
-      cpdLanguage := Language.Scala,
-      cpdReportType := ReportType.XML,
+      cpdLanguage := Scala,
+      cpdReportType := XML,
   
       cpdSourceSettings <<= cpdSourceSettings.dependsOn(compile in Compile),
       
-      cpdReportSettings <<= (cpdTargetPath, cpdReportName, cpdReportFileEncoding, cpdReportType) map (ReportSettings(_, _, _, _)),
-      cpdSourceSettings <<= (cpdSourceDirectories in Compile, cpdSourceEncoding, cpdLanguage, cpdMinimumTokens) map (SourceSettings(_, _, _, _)),
+      cpdReportSettings <<= (cpdTargetPath, cpdReportName, cpdReportFileEncoding, cpdReportType) map ReportSettings,
+      cpdSourceSettings <<= (cpdSourceDirectories in Compile, cpdSourceEncoding, cpdLanguage, cpdMinimumTokens) map SourceSettings,
   
-      cpdClasspath <<= (classpathTypes, update) map { Classpaths managedJars (cpdConfig, _, _) },
+      cpdClasspath := Classpaths managedJars (cpdConfig, classpathTypes value, update value),
       
       cpd <<= (cpdReportSettings, cpdSourceSettings, cpdMaxMemoryInMB, cpdClasspath, streams) map cpdAction)
 }

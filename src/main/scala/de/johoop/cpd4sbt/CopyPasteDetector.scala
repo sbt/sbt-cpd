@@ -1,7 +1,7 @@
 /*
  * This file is part of cpd4sbt.
  * 
- * Copyright (c) 2010, 2011 Joachim Hofer
+ * Copyright (c) 2010-2013 Joachim Hofer
  * All rights reserved.
  *
  * This program and the accompanying materials
@@ -29,9 +29,9 @@ object CopyPasteDetector extends Plugin with Settings {
         "-cp", PathFinder(classpath.files).absString, 
         "net.sourceforge.pmd.cpd.CPD",
         "--minimum-tokens", sourceSettings.minTokens.toString,
-        "--language", sourceSettings.language.toString,
+        "--language", sourceSettings.language.name,
         "--encoding", sourceSettings.encoding,
-        "--format", "net.sourceforge.pmd.cpd.%sRenderer" format reportSettings.format) ++
+        "--format", "net.sourceforge.pmd.cpd.%sRenderer" format reportSettings.format.name) ++
         sourceSettings.dirs.filter(_.isDirectory).flatMap(file => List("--files", file.getPath))
     
     streams.log debug "Executing: %s".format(commandLine mkString "\n")

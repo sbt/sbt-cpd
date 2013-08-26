@@ -1,7 +1,7 @@
 /*
  * This file is part of cpd4sbt.
  * 
- * Copyright (c) 2010, 2011 Joachim Hofer
+ * Copyright (c) 2010-2013 Joachim Hofer
  * All rights reserved.
  *
  * This program and the accompanying materials
@@ -11,17 +11,19 @@
  */
 package de.johoop.cpd4sbt
 
-object Language extends Enumeration {
-  type Language = Value
+object Language {
+  sealed trait Language {
+    val name: String
+  }
 
-  val Java = Value("java")
-  val C = Value("c")
-  val CPP = Value("cpp")
-  val PHP = Value("php")
-  val Ruby = Value("ruby")
-  val Fortran = Value("fortran")
-  val ECMAScript = Value("ecmascript")
-  val JavaScript = Value("ecmascript")
-  val JSP = Value("jsp")
-  val Scala = Value("scala")
+  case object Java extends Language { val name = "java" }
+  case object C extends Language { val name = "c" }
+  case object CPP extends Language { val name = "cpp" }
+  case object PHP extends Language { val name = "php" }
+  case object Ruby extends Language { val name = "ruby" }
+  case object Frortran extends Language { val name = "fortran" }
+  case object ECMAScript extends Language { val name = "ecmascript" }
+  case object JavaScript extends Language { val name = "ecmascript" }
+  case object JSP extends Language { val name = "jsp" }
+  case object Scala extends Language { val name = "scala" }
 }

@@ -1,7 +1,7 @@
 /*
  * This file is part of cpd4sbt.
  *
- * Copyright (c) 2010, 2011 Joachim Hofer
+ * Copyright (c) 2010-2013 Joachim Hofer
  * All rights reserved.
  *
  * This program and the accompanying materials
@@ -12,10 +12,12 @@
 package de.johoop.cpd4sbt
 
 object ReportType extends Enumeration {
-  type ReportType = Value
+  sealed trait ReportType { 
+  	val name: String
+  }
 
-  val Simple = Value("Simple")
-  val VS = Value("VS")
-  val XML = Value("XML")
-  val CSV = Value("CSV")
+  case object Simple extends ReportType { val name = "Simple" }
+  case object VS extends ReportType { val name = "VS" }
+  case object XML extends ReportType { val name = "XML" }
+  case object CSV extends ReportType { val name = "CSV" }
 }
