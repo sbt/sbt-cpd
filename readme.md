@@ -1,6 +1,6 @@
 # cpd4sbt - Static code analysis via PMD/CPD from within SBT
 
-This SBT plug-in enables you to analyze your code with the help of the great **[PMD Copy/Paste Detector](http:*pmd.sourceforge.net/cpd.html)** tool. It defines a `cpd` sbt action for that purpose.
+This SBT plug-in enables you to analyze your code with the help of the great **[PMD Copy/Paste Detector](http://pmd.sourceforge.net/cpd.html)** tool. It defines a `cpd` sbt action for that purpose.
 
 For SBT 0.13, you've basically got to add the following to your project's `build.sbt` file:
 
@@ -20,7 +20,7 @@ The settings specified below are still mostly valid, but they're now specified u
 
 ## Settings
 
-(see also the [CPD documentation](http:*pmd.sourceforge.net/cpd.html))
+(see also the [CPD documentation](http://pmd.sourceforge.net/cpd.html))
 
 ### `cpdReportType`
 
