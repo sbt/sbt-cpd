@@ -18,57 +18,64 @@ addSbtPlugin("de.johoop" % "cpd4sbt" % "1.1.4")
 
 The settings specified below are still mostly valid, but they're now specified using the new settings system of SBT 0.13.
 
-=== Settings ===
+## Settings
 
 (see also the [CPD documentation](http:*pmd.sourceforge.net/cpd.html))
 
-==== `cpdReportType` ====
+### `cpdReportType`
 
 * *Description:* Selects the output format for the CPD report.
 * *Accepts:* `CPDReportType.{Simple, XML, CSV, VS}`
 * *Default:* `CPDReportType.Xml`
 
-==== `cpdOutputPath` ====
+### `cpdOutputPath`
 
 * *Description:* Output path for CPD reports.
 * *Accepts:* any `sbt.Path`
 * *Default:* `outputPath / "cpd"`
 
-==== `cpdReportName ` ====
+### `cpdReportName`
+
 * *Description:* Name of the report file to generate.
 * *Accepts:* any legal filename
 * *Default:* `"cpd.xml"`
 
-==== `cpdLanguage ` ====
+### `cpdLanguage`
+
 * *Description:* Language to analyze. - If you want Scala specifically, you still need to extend the CPD tokenizers! Otherwise, choosing Scala will default to the "AnyLanguage" tokenizer
 * *Accepts:* `Language.{Java, C, CPP, PHP, Ruby, Fortran, ECMAScript, JavaScript, JSP, Scala}`
 * *Default:* `Language.Scala`
 
-==== `cpdMaxMemoryInMB ` ====
+### `cpdMaxMemoryInMB`
+
 * *Description:* Maximum amount of memory to allow for FindBugs (in MB).
 * *Accepts:* any reasonable amount of memory as an integer value
 * *Default:* `512`
 
-==== `cpdMinimumTokens ` ====
+### `cpdMinimumTokens`
+
 * *Description:* Minimum number of tokens of potential duplicates.
 * *Accepts:* A positive `Int`
 * *Default:* `100`
 
-==== `cpdSourceEncoding ` ====
+### `cpdSourceEncoding`
+
 * *Description:* Source file encoding.
 * *Accepts:* String representations of valid encodings.
 * *Default:* `"utf-8"`
 
-==== `cpdOutputEncoding ` ====
+### `cpdOutputEncoding`
+
 * *Description:* Output file encoding.
 * *Accepts:* String representations of valid encodings.
 * *Default:* `"utf-8"`
 
-==== `cpdSourcePaths ` ====
+### `cpdSourcePaths`
+
 * *Description:* Paths of the source files to analyze.
 * *Accepts:* A `List` of `Path`s
 * *Default:* `List(mainSourcePath)`.
 
-=== License ===
+## License
 
 This program and the accompanying materials are made available under the terms of the **Eclipse Public License v1.0** which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html
