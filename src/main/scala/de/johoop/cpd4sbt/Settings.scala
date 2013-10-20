@@ -68,7 +68,7 @@ private[cpd4sbt] trait Settings extends Plugin {
 
   val cpdSettings = Seq(
       ivyConfigurations += cpdConfig,
-      libraryDependencies += "net.sourceforge.pmd" % "pmd" % "5.0.0" % "cpd->default",
+      libraryDependencies += "net.sourceforge.pmd" % "pmd" % "5.0.5" % "cpd->default",
       
       cpdTargetPath := crossTarget.value / "cpd",
       cpdSourceDirectories in Compile <<= unmanagedSourceDirectories in Compile,
