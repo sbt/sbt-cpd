@@ -1,33 +1,8 @@
-publishTo := {
-  val nexus = "https://oss.sonatype.org/"
-  if (version.value.trim.endsWith("SNAPSHOT")) Some("snapshots" at nexus + "content/repositories/snapshots")
-  else Some("releases" at nexus + "service/local/staging/deploy/maven2")
+publishTo := { 
+  val qualifier = "sbt-plugin-" + (if (version.value contains "-SNAPSHOT") "snapshots" else "releases")
+  Some(Resolver.url(qualifier, new URL(s"http://repo.scala-sbt.org/scalasbt/$qualifier"))(Resolver.ivyStylePatterns))
 }
 
-publishMavenStyle := true
+publishMavenStyle := false
 
 publishArtifact in Test := false
-
-pomIncludeRepository := { x => false }
-
-pomExtra := (
-  <url>http://www.bitbucket.org/jmhofer/cpd4sbt</url>
-  <licenses>
-    <license>
-      <name>Eclipse Public License v1.0</name>
-      <url>http://www.eclipse.org/legal/epl-v10.html</url>
-      <distribution>repo</distribution>
-    </license>
-  </licenses>
-  <scm>
-    <url>https://bitbucket.org/jmhofer/cpd4sbt</url>
-    <connection>scm:hg:https://bitbucket.org/jmhofer/cpd4sbt</connection>
-  </scm>
-  <developers>
-    <developer>
-      <id>johofer</id>
-      <name>Joachim Hofer</name>
-      <url>http://jmhofer.johoop.de</url>
-    </developer>
-  </developers>
-)
