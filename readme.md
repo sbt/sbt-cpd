@@ -13,7 +13,7 @@ cpdSettings
 Also, you have to add the plugin dependency to your project's `./project/plugins.sbt` or the global `.sbt/project/build.sbt`:
 
 ```scala
-addSbtPlugin("de.johoop" % "cpd4sbt" % "1.1.3")
+addSbtPlugin("de.johoop" % "cpd4sbt" % "1.1.4")
 ```
 
 The settings specified below are still mostly valid, but they're now specified using the new settings system of SBT 0.13.
