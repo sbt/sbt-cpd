@@ -23,7 +23,7 @@ object CopyPasteDetector extends Plugin with Settings {
     
     IO createDirectory reportSettings.path
     
-    val commandLine = scala.collection.mutable.ListBuffer("java", 
+    val commandLine = List("java", 
         "-Xmx%dm" format maxMem, 
         "-Dfile.encoding=%s" format reportSettings.encoding,
         "-cp", PathFinder(classpath.files).absString, 
@@ -32,11 +32,9 @@ object CopyPasteDetector extends Plugin with Settings {
         "--language", sourceSettings.language.name,
         "--encoding", sourceSettings.encoding,
         "--format", "net.sourceforge.pmd.cpd.%sRenderer" format reportSettings.format.name) ++
-        sourceSettings.dirs.filter(_.isDirectory).flatMap(file => List("--files", file.getPath))
-    if (sourceSettings.skipDuplicateFiles) {
-        commandLine += "--skip-duplicate-files"
-    }
-    
+        sourceSettings.dirs.filter(_.isDirectory).flatMap(file => List("--files", file.getPath)) ++
+        (if (sourceSettings.skipDuplicateFiles) List("--skip-duplicate-files") else List())
+
     streams.log debug "Executing: %s".format(commandLine mkString "\n")
     
     Process(commandLine) #> (reportSettings.path / reportSettings.name) ! streams.log
