@@ -53,10 +53,13 @@ private[cpd4sbt] trait Settings extends Plugin {
   /** Type of CPD report. Defaults to <code>XML</code>. */
   val cpdReportType = SettingKey[ReportType]("cpd-report-type")
   
+  /** Ignore multiple copies of files of the same name and length in comparison. */
+  val cpdSkipDuplicateFiles = SettingKey[Boolean]("cpd-skip-duplicate-files")
+  
   private[cpd4sbt] case class ReportSettings(path: File, name: String, encoding: String, format: ReportType)
   val cpdReportSettings = TaskKey[ReportSettings]("cpd-report-settings")
 
-  private[cpd4sbt] case class SourceSettings(dirs: Seq[File], encoding: String, language: Language, minTokens: Int)
+  private[cpd4sbt] case class SourceSettings(dirs: Seq[File], encoding: String, language: Language, minTokens: Int, skipDuplicateFiles: Boolean)
   val cpdSourceSettings = TaskKey[SourceSettings]("cpd-source-settings")
   
   val cpdClasspath = TaskKey[Classpath]("cpd-classpath")
@@ -68,7 +71,7 @@ private[cpd4sbt] trait Settings extends Plugin {
 
   val cpdSettings = Seq(
       ivyConfigurations += cpdConfig,
-      libraryDependencies += "net.sourceforge.pmd" % "pmd" % "5.0.5" % "cpd->default",
+      libraryDependencies += "net.sourceforge.pmd" % "pmd" % "5.1.1" % "cpd->default",
       
       cpdTargetPath := crossTarget.value / "cpd",
       cpdSourceDirectories in Compile <<= unmanagedSourceDirectories in Compile,
@@ -80,11 +83,12 @@ private[cpd4sbt] trait Settings extends Plugin {
       cpdReportFileEncoding := "utf-8",
       cpdLanguage := Scala,
       cpdReportType := XML,
+	  cpdSkipDuplicateFiles := false,
   
       cpdSourceSettings <<= cpdSourceSettings.dependsOn(compile in Compile),
       
       cpdReportSettings <<= (cpdTargetPath, cpdReportName, cpdReportFileEncoding, cpdReportType) map ReportSettings,
-      cpdSourceSettings <<= (cpdSourceDirectories in Compile, cpdSourceEncoding, cpdLanguage, cpdMinimumTokens) map SourceSettings,
+      cpdSourceSettings <<= (cpdSourceDirectories in Compile, cpdSourceEncoding, cpdLanguage, cpdMinimumTokens, cpdSkipDuplicateFiles) map SourceSettings,
   
       cpdClasspath := Classpaths managedJars (cpdConfig, classpathTypes value, update value),
       
