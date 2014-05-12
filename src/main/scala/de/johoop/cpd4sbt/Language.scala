@@ -16,14 +16,17 @@ object Language {
     val name: String
   }
 
-  case object Java extends Language { val name = "java" }
   case object C extends Language { val name = "c" }
   case object CPP extends Language { val name = "cpp" }
+  case object CS extends Language { val name = "cs" }
+  case object Java extends Language { val name = "java" }
+  case object JSP extends Language { val name = "jsp" }
   case object PHP extends Language { val name = "php" }
   case object Ruby extends Language { val name = "ruby" }
-  case object Frortran extends Language { val name = "fortran" }
+  case object Fortran extends Language { val name = "fortran" }
   case object ECMAScript extends Language { val name = "ecmascript" }
   case object JavaScript extends Language { val name = "ecmascript" }
-  case object JSP extends Language { val name = "jsp" }
+  case object PLSQL extends Language { val name = "plsql" }
+  
   case object Scala extends Language { val name = "scala" }
 }

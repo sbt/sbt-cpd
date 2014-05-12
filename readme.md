@@ -43,7 +43,7 @@ The settings specified below are still mostly valid, but they're now specified u
 ### `cpdLanguage`
 
 * *Description:* Language to analyze. - If you want Scala specifically, you still need to extend the CPD tokenizers! Otherwise, choosing Scala will default to the "AnyLanguage" tokenizer
-* *Accepts:* `Language.{Java, C, CPP, PHP, Ruby, Fortran, ECMAScript, JavaScript, JSP, Scala}`
+* *Accepts:* `Language.{Java, C, CPP, CS, PHP, Ruby, Fortran, ECMAScript, JavaScript, JSP, PLSQL, Scala}`
 * *Default:* `Language.Scala`
 
 ### `cpdMaxMemoryInMB`
