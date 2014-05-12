@@ -48,7 +48,7 @@ The settings specified below are still mostly valid, but they're now specified u
 
 ### `cpdMaxMemoryInMB`
 
-* *Description:* Maximum amount of memory to allow for FindBugs (in MB).
+* *Description:* Maximum amount of memory to allow for CPD (in MB).
 * *Accepts:* any reasonable amount of memory as an integer value
 * *Default:* `512`
 
@@ -81,6 +81,25 @@ The settings specified below are still mostly valid, but they're now specified u
 * *Description:* Ignore multiple copies of files of the same name and length in comparison.
 * *Accepts:* `Boolean`
 * *Default:* `false`
+
+### `cpdSkipLexicalErrors`
+
+* *Description:* Skip files which can't be tokenized due to invalid characters instead of aborting.
+* *Accepts:* `Boolean`
+* *Default:* `false`
+
+### `cpdIgnoreLiterals`
+
+* *Description:* Ignore literal value differences when evaluating a duplicate block.
+* *Accepts:* `Boolean`
+* *Default:* `false`
+
+### `cpdIgnoreIdentifiers`
+
+* *Description:* Ignore identifier name differences when evaluating a duplicate block.
+* *Accepts:* `Boolean`
+* *Default:* `false`
+
 
 ## License
 

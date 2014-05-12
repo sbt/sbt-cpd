@@ -56,10 +56,20 @@ private[cpd4sbt] trait Settings extends Plugin {
   /** Ignore multiple copies of files of the same name and length in comparison. */
   val cpdSkipDuplicateFiles = SettingKey[Boolean]("cpd-skip-duplicate-files")
   
+  /** Skip files which can't be tokenized due to invalid characters instead of aborting. */
+  val cpdSkipLexicalErrors = SettingKey[Boolean]("cpd-skip-lexical-errors")
+  
+  /** Ignore literal value differences when evaluating a duplicate block. */
+  val cpdIgnoreLiterals = SettingKey[Boolean]("cpd-ignore-literals")
+
+  /** Ignore identifier name differences when evaluating a duplicate block. */
+  val cpdIgnoreIdentifiers = SettingKey[Boolean]("cpd-ignore-identifiers")
+
   private[cpd4sbt] case class ReportSettings(path: File, name: String, encoding: String, format: ReportType)
   val cpdReportSettings = TaskKey[ReportSettings]("cpd-report-settings")
 
-  private[cpd4sbt] case class SourceSettings(dirs: Seq[File], encoding: String, language: Language, minTokens: Int, skipDuplicateFiles: Boolean)
+  private[cpd4sbt] case class SourceSettings(dirs: Seq[File], encoding: String, language: Language, minTokens: Int,
+      skipDuplicateFiles: Boolean, skipLexicalErrors: Boolean, ignoreLiterals: Boolean, ignoreIdentifiers: Boolean)
   val cpdSourceSettings = TaskKey[SourceSettings]("cpd-source-settings")
   
   val cpdClasspath = TaskKey[Classpath]("cpd-classpath")
@@ -83,12 +93,15 @@ private[cpd4sbt] trait Settings extends Plugin {
       cpdReportFileEncoding := "utf-8",
       cpdLanguage := Scala,
       cpdReportType := XML,
-	  cpdSkipDuplicateFiles := false,
+      cpdSkipDuplicateFiles := false,
+      cpdSkipLexicalErrors := false,
+      cpdIgnoreLiterals := false,
+      cpdIgnoreIdentifiers := false,
   
       cpdSourceSettings <<= cpdSourceSettings.dependsOn(compile in Compile),
       
       cpdReportSettings <<= (cpdTargetPath, cpdReportName, cpdReportFileEncoding, cpdReportType) map ReportSettings,
-      cpdSourceSettings <<= (cpdSourceDirectories in Compile, cpdSourceEncoding, cpdLanguage, cpdMinimumTokens, cpdSkipDuplicateFiles) map SourceSettings,
+      cpdSourceSettings <<= (cpdSourceDirectories in Compile, cpdSourceEncoding, cpdLanguage, cpdMinimumTokens, cpdSkipDuplicateFiles, cpdSkipLexicalErrors, cpdIgnoreLiterals, cpdIgnoreIdentifiers) map SourceSettings,
   
       cpdClasspath := Classpaths managedJars (cpdConfig, classpathTypes value, update value),
       

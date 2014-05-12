@@ -33,7 +33,10 @@ object CopyPasteDetector extends Plugin with Settings {
         "--encoding", sourceSettings.encoding,
         "--format", "net.sourceforge.pmd.cpd.%sRenderer" format reportSettings.format.name) ++
         sourceSettings.dirs.filter(_.isDirectory).flatMap(file => List("--files", file.getPath)) ++
-        (if (sourceSettings.skipDuplicateFiles) List("--skip-duplicate-files") else List())
+        (if (sourceSettings.skipDuplicateFiles) List("--skip-duplicate-files") else List()) ++
+        (if (sourceSettings.skipLexicalErrors) List("--skip-lexical-errors") else List()) ++
+        (if (sourceSettings.ignoreLiterals) List("--ignore-literals") else List()) ++
+        (if (sourceSettings.ignoreIdentifiers) List("--ignore-identifiers") else List())
 
     streams.log debug "Executing: %s".format(commandLine mkString "\n")
     
