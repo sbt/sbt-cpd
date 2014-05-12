@@ -65,11 +65,14 @@ private[cpd4sbt] trait Settings extends Plugin {
   /** Ignore identifier name differences when evaluating a duplicate block. */
   val cpdIgnoreIdentifiers = SettingKey[Boolean]("cpd-ignore-identifiers")
 
+  /** Ignore language annotations when evaluating a duplicate block. */
+  val cpdIgnoreAnnotations = SettingKey[Boolean]("cpd-ignore-annotations")
+
   private[cpd4sbt] case class ReportSettings(path: File, name: String, encoding: String, format: ReportType)
   val cpdReportSettings = TaskKey[ReportSettings]("cpd-report-settings")
 
   private[cpd4sbt] case class SourceSettings(dirs: Seq[File], encoding: String, language: Language, minTokens: Int,
-      skipDuplicateFiles: Boolean, skipLexicalErrors: Boolean, ignoreLiterals: Boolean, ignoreIdentifiers: Boolean)
+      skipDuplicateFiles: Boolean, skipLexicalErrors: Boolean, ignoreLiterals: Boolean, ignoreIdentifiers: Boolean, ignoreAnnotations: Boolean)
   val cpdSourceSettings = TaskKey[SourceSettings]("cpd-source-settings")
   
   val cpdClasspath = TaskKey[Classpath]("cpd-classpath")
@@ -97,11 +100,12 @@ private[cpd4sbt] trait Settings extends Plugin {
       cpdSkipLexicalErrors := false,
       cpdIgnoreLiterals := false,
       cpdIgnoreIdentifiers := false,
+      cpdIgnoreAnnotations := false,
   
       cpdSourceSettings <<= cpdSourceSettings.dependsOn(compile in Compile),
       
       cpdReportSettings <<= (cpdTargetPath, cpdReportName, cpdReportFileEncoding, cpdReportType) map ReportSettings,
-      cpdSourceSettings <<= (cpdSourceDirectories in Compile, cpdSourceEncoding, cpdLanguage, cpdMinimumTokens, cpdSkipDuplicateFiles, cpdSkipLexicalErrors, cpdIgnoreLiterals, cpdIgnoreIdentifiers) map SourceSettings,
+      cpdSourceSettings <<= (cpdSourceDirectories in Compile, cpdSourceEncoding, cpdLanguage, cpdMinimumTokens, cpdSkipDuplicateFiles, cpdSkipLexicalErrors, cpdIgnoreLiterals, cpdIgnoreIdentifiers, cpdIgnoreAnnotations) map SourceSettings,
   
       cpdClasspath := Classpaths managedJars (cpdConfig, classpathTypes value, update value),
       

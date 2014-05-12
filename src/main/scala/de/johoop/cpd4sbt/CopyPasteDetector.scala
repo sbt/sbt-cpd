@@ -23,7 +23,7 @@ object CopyPasteDetector extends Plugin with Settings {
     
     IO createDirectory reportSettings.path
     
-    val commandLine = List("java", 
+    val commandLine = (List("java", 
         "-Xmx%dm" format maxMem, 
         "-Dfile.encoding=%s" format reportSettings.encoding,
         "-cp", PathFinder(classpath.files).absString, 
@@ -36,7 +36,8 @@ object CopyPasteDetector extends Plugin with Settings {
         (if (sourceSettings.skipDuplicateFiles) List("--skip-duplicate-files") else List()) ++
         (if (sourceSettings.skipLexicalErrors) List("--skip-lexical-errors") else List()) ++
         (if (sourceSettings.ignoreLiterals) List("--ignore-literals") else List()) ++
-        (if (sourceSettings.ignoreIdentifiers) List("--ignore-identifiers") else List())
+        (if (sourceSettings.ignoreIdentifiers) List("--ignore-identifiers") else List()) ++
+        (if (sourceSettings.ignoreAnnotations) List("--ignore-annotations") else List()))
 
     streams.log debug "Executing: %s".format(commandLine mkString "\n")
     

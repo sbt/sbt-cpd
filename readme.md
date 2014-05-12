@@ -100,6 +100,11 @@ The settings specified below are still mostly valid, but they're now specified u
 * *Accepts:* `Boolean`
 * *Default:* `false`
 
+### `cpdIgnoreAnnotations`
+
+* *Description:* Ignore language annotations when evaluating a duplicate block.
+* *Accepts:* `Boolean`
+* *Default:* `false`
 
 ## License
 
