@@ -41,6 +41,11 @@ object CopyPasteDetector extends Plugin with Settings {
 
     streams.log debug "Executing: %s".format(commandLine mkString "\n")
     
-    Process(commandLine) #> (reportSettings.path / reportSettings.name) ! streams.log
+    reportSettings.outputType match {
+      case OutputType.File => 
+        Process(commandLine) #> (reportSettings.path / reportSettings.name) ! streams.log
+      case OutputType.Console => 
+        Process(commandLine) ! streams.log
+    }
   }
 }

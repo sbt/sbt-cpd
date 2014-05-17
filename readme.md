@@ -40,6 +40,12 @@ The settings specified below are still mostly valid, but they're now specified u
 * *Accepts:* any legal filename
 * *Default:* `"cpd.xml"`
 
+### `cpdOutputType`
+
+* *Description:* Selects the output type for the CPD report.
+* *Accepts:* `CPDReportType.{File, Console}`
+* *Default:* `CPDReportType.File`
+
 ### `cpdLanguage`
 
 * *Description:* Language to analyze. - If you want Scala specifically, you still need to extend the CPD tokenizers! Otherwise, choosing Scala will default to the "AnyLanguage" tokenizer
