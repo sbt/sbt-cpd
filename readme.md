@@ -43,8 +43,8 @@ The settings specified below are still mostly valid, but they're now specified u
 ### `cpdOutputType`
 
 * *Description:* Selects the output type for the CPD report.
-* *Accepts:* `CPDReportType.{File, Console}`
-* *Default:* `CPDReportType.File`
+* *Accepts:* `CPDOutputType.{File, Console}`
+* *Default:* `CPDOutputType.File`
 
 ### `cpdLanguage`
 

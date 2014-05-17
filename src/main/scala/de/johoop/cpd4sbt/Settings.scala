@@ -54,7 +54,7 @@ private[cpd4sbt] trait Settings extends Plugin {
   /** Type of CPD report. Defaults to <code>XML</code>. */
   val cpdReportType = SettingKey[ReportType]("cpd-report-type")
   
-  /** Type of CPD output. Defaults to file. */
+  /** Type of CPD output. Defaults to <code>File</code>. */
   val cpdOutputType = SettingKey[OutputType]("cpd-output-type")
 
   /** Ignore multiple copies of files of the same name and length in comparison. */
