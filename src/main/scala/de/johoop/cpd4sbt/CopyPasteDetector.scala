@@ -23,7 +23,10 @@ object CopyPasteDetector extends Plugin with Settings {
     
     IO createDirectory reportSettings.path
     
-    val commandLine = List("java", 
+    def booleanOptions(options: (String, Boolean)*): List[String] = 
+      options.filter(_._2).map(_._1).toList
+    
+    val commandLine = (List("java", 
         "-Xmx%dm" format maxMem, 
         "-Dfile.encoding=%s" format reportSettings.encoding,
         "-cp", PathFinder(classpath.files).absString, 
@@ -33,10 +36,20 @@ object CopyPasteDetector extends Plugin with Settings {
         "--encoding", sourceSettings.encoding,
         "--format", "net.sourceforge.pmd.cpd.%sRenderer" format reportSettings.format.name) ++
         sourceSettings.dirs.filter(_.isDirectory).flatMap(file => List("--files", file.getPath)) ++
-        (if (sourceSettings.skipDuplicateFiles) List("--skip-duplicate-files") else List())
+        booleanOptions(
+          ("--skip-duplicate-files", sourceSettings.skipDuplicateFiles),
+          ("--skip-lexical-errors", sourceSettings.skipLexicalErrors),
+          ("--ignore-literals", sourceSettings.ignoreLiterals),
+          ("--ignore-identifiers", sourceSettings.ignoreIdentifiers),
+          ("--ignore-annotations", sourceSettings.ignoreAnnotations)))
 
     streams.log debug "Executing: %s".format(commandLine mkString "\n")
     
-    Process(commandLine) #> (reportSettings.path / reportSettings.name) ! streams.log
+    reportSettings.outputType match {
+      case OutputType.File => 
+        Process(commandLine) #> (reportSettings.path / reportSettings.name) ! streams.log
+      case OutputType.Console => 
+        Process(commandLine) ! streams.log
+    }
   }
 }

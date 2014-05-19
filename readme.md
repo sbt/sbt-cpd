@@ -40,15 +40,21 @@ The settings specified below are still mostly valid, but they're now specified u
 * *Accepts:* any legal filename
 * *Default:* `"cpd.xml"`
 
+### `cpdOutputType`
+
+* *Description:* Selects the output type for the CPD report.
+* *Accepts:* `CPDOutputType.{File, Console}`
+* *Default:* `CPDOutputType.File`
+
 ### `cpdLanguage`
 
 * *Description:* Language to analyze. - If you want Scala specifically, you still need to extend the CPD tokenizers! Otherwise, choosing Scala will default to the "AnyLanguage" tokenizer
-* *Accepts:* `Language.{Java, C, CPP, PHP, Ruby, Fortran, ECMAScript, JavaScript, JSP, Scala}`
+* *Accepts:* `Language.{Java, C, CPP, CS, PHP, Ruby, Fortran, ECMAScript, JavaScript, JSP, PLSQL, Scala}`
 * *Default:* `Language.Scala`
 
 ### `cpdMaxMemoryInMB`
 
-* *Description:* Maximum amount of memory to allow for FindBugs (in MB).
+* *Description:* Maximum amount of memory to allow for CPD (in MB).
 * *Accepts:* any reasonable amount of memory as an integer value
 * *Default:* `512`
 
@@ -79,6 +85,30 @@ The settings specified below are still mostly valid, but they're now specified u
 ### `cpdSkipDuplicateFiles`
 
 * *Description:* Ignore multiple copies of files of the same name and length in comparison.
+* *Accepts:* `Boolean`
+* *Default:* `false`
+
+### `cpdSkipLexicalErrors`
+
+* *Description:* Skip files which can't be tokenized due to invalid characters instead of aborting.
+* *Accepts:* `Boolean`
+* *Default:* `false`
+
+### `cpdIgnoreLiterals`
+
+* *Description:* Ignore literal value differences when evaluating a duplicate block.
+* *Accepts:* `Boolean`
+* *Default:* `false`
+
+### `cpdIgnoreIdentifiers`
+
+* *Description:* Ignore identifier name differences when evaluating a duplicate block.
+* *Accepts:* `Boolean`
+* *Default:* `false`
+
+### `cpdIgnoreAnnotations`
+
+* *Description:* Ignore language annotations when evaluating a duplicate block.
 * *Accepts:* `Boolean`
 * *Default:* `false`
 
