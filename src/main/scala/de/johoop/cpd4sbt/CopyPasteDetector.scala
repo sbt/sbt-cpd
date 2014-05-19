@@ -23,6 +23,9 @@ object CopyPasteDetector extends Plugin with Settings {
     
     IO createDirectory reportSettings.path
     
+    def booleanOptions(options: (String, Boolean)*): List[String] = 
+      options.filter(_._2).map(_._1).toList
+    
     val commandLine = (List("java", 
         "-Xmx%dm" format maxMem, 
         "-Dfile.encoding=%s" format reportSettings.encoding,
@@ -33,11 +36,12 @@ object CopyPasteDetector extends Plugin with Settings {
         "--encoding", sourceSettings.encoding,
         "--format", "net.sourceforge.pmd.cpd.%sRenderer" format reportSettings.format.name) ++
         sourceSettings.dirs.filter(_.isDirectory).flatMap(file => List("--files", file.getPath)) ++
-        (if (sourceSettings.skipDuplicateFiles) List("--skip-duplicate-files") else List()) ++
-        (if (sourceSettings.skipLexicalErrors) List("--skip-lexical-errors") else List()) ++
-        (if (sourceSettings.ignoreLiterals) List("--ignore-literals") else List()) ++
-        (if (sourceSettings.ignoreIdentifiers) List("--ignore-identifiers") else List()) ++
-        (if (sourceSettings.ignoreAnnotations) List("--ignore-annotations") else List()))
+        booleanOptions(
+          ("--skip-duplicate-files", sourceSettings.skipDuplicateFiles),
+          ("--skip-lexical-errors", sourceSettings.skipLexicalErrors),
+          ("--ignore-literals", sourceSettings.ignoreLiterals),
+          ("--ignore-identifiers", sourceSettings.ignoreIdentifiers),
+          ("--ignore-annotations", sourceSettings.ignoreAnnotations)))
 
     streams.log debug "Executing: %s".format(commandLine mkString "\n")
     
