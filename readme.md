@@ -13,10 +13,17 @@ cpdSettings
 Also, you have to add the plugin dependency to your project's `./project/plugins.sbt` or the global `.sbt/project/build.sbt`:
 
 ```scala
-addSbtPlugin("de.johoop" % "cpd4sbt" % "1.1.4")
+addSbtPlugin("de.johoop" % "cpd4sbt" % "1.1.5")
 ```
 
 The settings specified below are still mostly valid, but they're now specified using the new settings system of SBT 0.13.
+
+## Change Log
+
+* *1.1.5*
+    * Added settings for the CPD command line switches `ignore-annotations`, `ignore-literals`, `ignore-identifiers`, `skip-duplicate-files` and `skip-lexical-errors`
+    * Added `cs` and `plsql` languages (and fixed a typo)
+    * Added option to print the CPD report to the console
 
 ## Settings
 
@@ -111,6 +118,10 @@ The settings specified below are still mostly valid, but they're now specified u
 * *Description:* Ignore language annotations when evaluating a duplicate block.
 * *Accepts:* `Boolean`
 * *Default:* `false`
+
+## Contributors
+
+Many thanks to [corux](https://github.com/corux) and [Matic Potočnik](https://github.com/HairyFotr) for their awesome contributions!
 
 ## License
 
