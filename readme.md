@@ -31,9 +31,9 @@ The settings specified below are still mostly valid, but they're now specified u
 
 ### `cpdReportType`
 
-* *Description:* Selects the output format for the CPD report.
-* *Accepts:* `CPDReportType.{Simple, XML, CSV, VS}`
-* *Default:* `CPDReportType.Xml`
+* *Description:* Selects the output format for the CPD report. Requires to import `import de.johoop.cpd4sbt._`.
+* *Accepts:* `ReportType.{Simple, XML, CSV, VS}`
+* *Default:* `ReportType.Xml`
 
 ### `cpdOutputPath`
 
@@ -49,9 +49,9 @@ The settings specified below are still mostly valid, but they're now specified u
 
 ### `cpdOutputType`
 
-* *Description:* Selects the output type for the CPD report.
-* *Accepts:* `CPDOutputType.{File, Console}`
-* *Default:* `CPDOutputType.File`
+* *Description:* Selects the output type for the CPD report. Requires to import `import de.johoop.cpd4sbt._`.
+* *Accepts:* `OutputType.{File, Console}`
+* *Default:* `OutputType.File`
 
 ### `cpdLanguage`
 
