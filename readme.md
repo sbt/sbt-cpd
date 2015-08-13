@@ -83,7 +83,7 @@ The settings specified below are still mostly valid, but they're now specified u
 * *Accepts:* String representations of valid encodings.
 * *Default:* `"utf-8"`
 
-### `cpdSourcePaths`
+### `cpdSourceDirectories`
 
 * *Description:* Paths of the source files to analyze.
 * *Accepts:* A `List` of `Path`s
