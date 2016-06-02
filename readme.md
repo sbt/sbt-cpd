@@ -35,7 +35,7 @@ The settings specified below are still mostly valid, but they're now specified u
 * *Accepts:* `ReportType.{Simple, XML, CSV, VS}`
 * *Default:* `ReportType.Xml`
 
-### `cpdOutputPath`
+### `cpdTargetPath`
 
 * *Description:* Output path for CPD reports.
 * *Accepts:* any `sbt.Path`
