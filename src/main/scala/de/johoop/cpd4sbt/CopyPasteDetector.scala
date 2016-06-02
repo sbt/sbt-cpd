@@ -1,7 +1,7 @@
 /*
  * This file is part of cpd4sbt.
  * 
- * Copyright (c) 2010-2013 Joachim Hofer
+ * Copyright (c) Joachim Hofer
  * All rights reserved.
  *
  * This program and the accompanying materials
@@ -11,22 +11,26 @@
  */
 package de.johoop.cpd4sbt
 
-import java.io.File
-
 import sbt._
 import Keys._
 
-object CopyPasteDetector extends Plugin with Settings {
-  
-  def cpdAction(reportSettings: ReportSettings, sourceSettings: SourceSettings, maxMem: Int, 
-      classpath: Classpath, streams: TaskStreams) {
-    
+object CopyPasteDetector extends AutoPlugin {
+
+  object autoImport extends CpdKeys
+
+  import autoImport._
+
+  override lazy val projectConfigurations = Seq(Settings.cpdConfig)
+
+  override lazy val projectSettings = Settings.defaultSettings :+
+    (cpd <<= (cpdReportSettings, cpdSourceSettings, cpdMaxMemoryInMB, cpdClasspath, streams) map cpdAction)
+
+  private def cpdAction(reportSettings: ReportSettings, sourceSettings: SourceSettings, maxMem: Int, classpath: Classpath, streams: TaskStreams) {
     IO createDirectory reportSettings.path
     
-    def booleanOptions(options: (String, Boolean)*): List[String] = 
-      options.filter(_._2).map(_._1).toList
+    def booleanOptions(options: (String, Boolean)*): List[String] = options.filter(_._2).map(_._1).toList
     
-    val commandLine = (List("java", 
+    val commandLine = List("java",
         "-Xmx%dm" format maxMem, 
         "-Dfile.encoding=%s" format reportSettings.encoding,
         "-cp", PathFinder(classpath.files).absString, 
@@ -41,7 +45,7 @@ object CopyPasteDetector extends Plugin with Settings {
           ("--skip-lexical-errors", sourceSettings.skipLexicalErrors),
           ("--ignore-literals", sourceSettings.ignoreLiterals),
           ("--ignore-identifiers", sourceSettings.ignoreIdentifiers),
-          ("--ignore-annotations", sourceSettings.ignoreAnnotations)))
+          ("--ignore-annotations", sourceSettings.ignoreAnnotations))
 
     streams.log debug "Executing: %s".format(commandLine mkString "\n")
     
