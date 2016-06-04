@@ -30,7 +30,7 @@ The settings specified below are still mostly valid, but they're now specified u
 
 ## Settings
 
-(see also the [CPD documentation](http://pmd.sourceforge.net/cpd-usage.html))
+(see also the [CPD documentation](https://pmd.github.io/pmd-5.4.2/usage/cpd-usage.html))
 
 ### `cpdReportType`
 
