@@ -121,7 +121,14 @@ The settings specified below are still mostly valid, but they're now specified u
 
 ## Contributors
 
-Many thanks to [corux](https://github.com/corux) and [Matic Potočnik](https://github.com/HairyFotr) for their awesome contributions!
+Many thanks to
+
+* [corux](https://github.com/corux)
+* [Jentsch](https://github.com/Jentsch)
+* [Martin Mauch](https://github.com/nightscape)
+* [Matic Potočnik](https://github.com/HairyFotr)
+
+for their awesome contributions!
 
 ## License
 
