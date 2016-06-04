@@ -5,21 +5,24 @@ This SBT plug-in enables you to analyze your code with the help of the great **[
 For SBT 0.13, you've basically got to add the following to your project's `build.sbt` file:
 
 ```scala
-import de.johoop.cpd4sbt.CopyPasteDetector._
-
-cpdSettings
+enablePlugins(CopyPasteDetector)
 ```
 
 Also, you have to add the plugin dependency to your project's `./project/plugins.sbt` or the global `.sbt/project/build.sbt`:
 
 ```scala
-addSbtPlugin("de.johoop" % "cpd4sbt" % "1.1.5")
+addSbtPlugin("de.johoop" % "cpd4sbt" % "1.2.0")
 ```
 
 The settings specified below are still mostly valid, but they're now specified using the new settings system of SBT 0.13.
 
 ## Change Log
 
+* *1.2.0*
+    * Converted plugin to an auto-plugin
+    * Updated PMD/CPD to version 1.5.2
+    * Added test project
+    * Fixed readme a bit
 * *1.1.5*
     * Added settings for the CPD command line switches `ignore-annotations`, `ignore-literals`, `ignore-identifiers`, `skip-duplicate-files` and `skip-lexical-errors`
     * Added `cs` and `plsql` languages (and fixed a typo)
