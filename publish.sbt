@@ -1,5 +1,5 @@
 bintrayOrganization := None
 bintrayRepository := "sbt-plugins"
-bintrayPackage <<= name
+bintrayPackage := { name.value }
 publishArtifact in Test := false
 publishMavenStyle := false
