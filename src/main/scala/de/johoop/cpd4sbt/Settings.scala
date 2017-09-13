@@ -19,14 +19,14 @@ import ReportType._
 
 private[cpd4sbt] object Settings extends CpdKeys {
 
-  val cpdConfig = config("cpd") hide
+  val CpdConfig = config("cpd") hide
 
   val defaultSettings = Seq(
-    ivyConfigurations += cpdConfig,
+    ivyConfigurations += CpdConfig,
     libraryDependencies += "net.sourceforge.pmd" % "pmd-dist" % "5.4.2" % "cpd->default",
 
     cpdTargetPath := crossTarget.value / "cpd",
-    cpdSourceDirectories in Compile <<= unmanagedSourceDirectories in Compile,
+    cpdSourceDirectories in Compile := { (unmanagedSourceDirectories in Compile).value },
 
     cpdReportName := "cpd.xml",
     cpdMaxMemoryInMB := 512,
@@ -42,11 +42,27 @@ private[cpd4sbt] object Settings extends CpdKeys {
     cpdIgnoreIdentifiers := false,
     cpdIgnoreAnnotations := false,
 
-    cpdSourceSettings <<= cpdSourceSettings.dependsOn(compile in Compile),
+    cpdSourceSettings := { cpdSourceSettings.dependsOn(compile in Compile).value },
 
-    cpdReportSettings <<= (cpdTargetPath, cpdReportName, cpdReportFileEncoding, cpdReportType, cpdOutputType) map ReportSettings,
-    cpdSourceSettings <<= (cpdSourceDirectories in Compile, cpdSourceEncoding, cpdLanguage, cpdMinimumTokens, cpdSkipDuplicateFiles, cpdSkipLexicalErrors, cpdIgnoreLiterals, cpdIgnoreIdentifiers, cpdIgnoreAnnotations) map SourceSettings,
+    cpdReportSettings :=
+      ReportSettings(
+        cpdTargetPath.value,
+        cpdReportName.value,
+        cpdReportFileEncoding.value,
+        cpdReportType.value,
+        cpdOutputType.value),
+    cpdSourceSettings :=
+      SourceSettings(
+        (cpdSourceDirectories in Compile).value,
+        cpdSourceEncoding.value,
+        cpdLanguage.value,
+        cpdMinimumTokens.value,
+        cpdSkipDuplicateFiles.value,
+        cpdSkipLexicalErrors.value,
+        cpdIgnoreLiterals.value,
+        cpdIgnoreIdentifiers.value,
+        cpdIgnoreAnnotations.value),
 
-    cpdClasspath := Classpaths managedJars (cpdConfig, classpathTypes value, update value)
+    cpdClasspath := Classpaths managedJars (CpdConfig, classpathTypes value, update value)
   )
 }
