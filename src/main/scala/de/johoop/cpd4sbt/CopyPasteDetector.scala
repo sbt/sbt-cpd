@@ -14,16 +14,23 @@ package de.johoop.cpd4sbt
 import sbt._
 import Keys._
 
+import Compat.Process
+
 object CopyPasteDetector extends AutoPlugin {
 
   object autoImport extends CpdKeys
 
   import autoImport._
 
-  override lazy val projectConfigurations = Seq(Settings.cpdConfig)
+  override lazy val projectConfigurations = Seq(Settings.CpdConfig)
 
   override lazy val projectSettings = Settings.defaultSettings :+
-    (cpd <<= (cpdReportSettings, cpdSourceSettings, cpdMaxMemoryInMB, cpdClasspath, streams) map cpdAction)
+    (cpd := cpdAction(
+      cpdReportSettings.value,
+      cpdSourceSettings.value,
+      cpdMaxMemoryInMB.value,
+      cpdClasspath.value,
+      streams.value))
 
   private def cpdAction(reportSettings: ReportSettings, sourceSettings: SourceSettings, maxMem: Int, classpath: Classpath, streams: TaskStreams) {
     IO createDirectory reportSettings.path
