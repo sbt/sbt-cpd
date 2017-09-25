@@ -14,14 +14,17 @@ package de.johoop.cpd4sbt
 
 import sbt._
 import Keys._
-
 import Compat.Process
+import sbt.plugins.JvmPlugin
 
 object CopyPasteDetector extends AutoPlugin {
 
   object autoImport extends CpdKeys
 
   import autoImport._
+
+  override def trigger: PluginTrigger = allRequirements
+  override def requires: Plugins = JvmPlugin
 
   override lazy val projectConfigurations = Seq(Settings.CpdConfig)
 
