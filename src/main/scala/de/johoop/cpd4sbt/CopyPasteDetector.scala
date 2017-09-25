@@ -74,9 +74,9 @@ object CopyPasteDetector extends AutoPlugin {
     streams.log debug "Executing: %s".format(commandLine mkString "\n")
 
     reportSettings.outputType match {
-      case OutputType.File =>
+      case CpdOutputType.File =>
         Process(commandLine) #> (reportSettings.path / reportSettings.name) ! streams.log
-      case OutputType.Console =>
+      case CpdOutputType.Console =>
         Process(commandLine) ! streams.log
     }
   }

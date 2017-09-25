@@ -14,9 +14,9 @@ package de.johoop.cpd4sbt
 
 import java.io.File
 
-import de.johoop.cpd4sbt.Language.Language
-import de.johoop.cpd4sbt.OutputType.OutputType
-import de.johoop.cpd4sbt.ReportType.ReportType
+import de.johoop.cpd4sbt.settings.CpdLanguage.Language
+import de.johoop.cpd4sbt.settings.CpdOutputType.OutputType
+import de.johoop.cpd4sbt.settings.CpdReportType.ReportType
 import sbt.Keys._
 import sbt._
 
@@ -86,4 +86,8 @@ trait CpdKeys {
   // TODO remove
   val cpdReportSettings = taskKey[ReportSettings]("cpd-report-settings")
 
+  // type aliases for auto import
+  val CpdLanguage: settings.CpdLanguage.type = settings.CpdLanguage
+  val CpdOutputType: settings.CpdOutputType.type = settings.CpdOutputType
+  val CpdReportType: settings.CpdReportType.type = settings.CpdReportType
 }
