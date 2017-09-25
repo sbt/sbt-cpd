@@ -12,11 +12,8 @@
 
 package de.johoop.cpd4sbt
 
+import sbt.Keys._
 import sbt._
-import Keys._
-
-import Language._
-import ReportType._
 
 private[cpd4sbt] object Settings extends CpdKeys {
 
@@ -32,9 +29,9 @@ private[cpd4sbt] object Settings extends CpdKeys {
     cpdMinimumTokens := 100,
     cpdSourceEncoding := "utf-8",
     cpdReportFileEncoding := "utf-8",
-    cpdLanguage := Scala,
-    cpdReportType := XML,
-    cpdOutputType := OutputType.File,
+    cpdLanguage := CpdLanguage.Scala,
+    cpdReportType := CpdReportType.XML,
+    cpdOutputType := CpdOutputType.File,
     cpdSkipDuplicateFiles := false,
     cpdSkipLexicalErrors := false,
     cpdIgnoreLiterals := false,
