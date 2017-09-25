@@ -1,5 +1,5 @@
 name := "sbt-cpd"
-organization := "org.scala-sbt"
+organization := "com.github.sbt"
 
 version := "2.0.0-M1-SNAPSHOT"
 
