@@ -18,7 +18,9 @@ import de.johoop.cpd4sbt.Language.Language
 import de.johoop.cpd4sbt.OutputType.OutputType
 import de.johoop.cpd4sbt.ReportType.ReportType
 import sbt.Keys._
-import sbt.{TaskKey, SettingKey}
+import sbt._
+
+object CpdKeys extends CpdKeys
 
 trait CpdKeys {
   private[cpd4sbt] case class ReportSettings(
@@ -39,59 +41,49 @@ trait CpdKeys {
       ignoreIdentifiers: Boolean,
       ignoreAnnotations: Boolean)
 
-  /** Source files to analyze. Defaults to <code>unmanagedSourceDirectories</code>. */
-  val cpdSourceDirectories = SettingKey[Seq[File]]("cpd-source-directories")
+  val cpd = taskKey[Unit]("Run CPD analysis")
 
-  /** Output path for CPD reports. Defaults to <code>target / "cpd"</code>. */
-  val cpdTargetPath = SettingKey[File]("cpd-target-path")
+  val cpdSourceDirectories =
+    settingKey[Seq[File]]("Source files to analyze.")
+  val cpdSourceEncoding =
+    settingKey[String]("Source file encoding.")
 
-  /** Name of the report file to generate. Defaults to <code>"cpd.xml"</code> */
-  val cpdReportName = SettingKey[String]("cpd-report-name")
+  val cpdTargetPath =
+    settingKey[File]("Output path for CPD reports.")
+  val cpdReportName =
+    settingKey[String]("Name of the report file to generate.")
+  val cpdReportFileEncoding =
+    settingKey[String]("Report file encoding.")
+  val cpdReportType =
+    settingKey[ReportType]("Type of CPD report.")
+  val cpdOutputType =
+    settingKey[OutputType]("Type of CPD output.")
 
-  /** Report file encoding. Defaults to <code>"utf-8"</code>. */
-  val cpdReportFileEncoding = SettingKey[String]("cpd-report-file-encoding")
+  val cpdLanguage =
+    settingKey[Language]("Language to analyze.")
+  val cpdMaxMemoryInMB =
+    settingKey[Int]("Maximum amount of memory to allow for CPD (in MB).")
+  val cpdMinimumTokens =
+    settingKey[Int]("Minimum number of tokens of potential duplicates.")
 
-  /** Maximum amount of memory to allow for CPD (in MB). Defaults to <code>512</code>.*/
-  val cpdMaxMemoryInMB = SettingKey[Int]("cpd-max-memory-in-mb")
+  val cpdSkipDuplicateFiles =
+    settingKey[Boolean]("Ignore multiple copies of files of the same name and length in comparison.")
+  val cpdSkipLexicalErrors =
+    settingKey[Boolean]("Skip files which can't be tokenized due to invalid characters instead of aborting.")
+  val cpdIgnoreLiterals =
+    settingKey[Boolean]("Ignore literal value differences when evaluating a duplicate block.")
+  val cpdIgnoreIdentifiers =
+    settingKey[Boolean]("Ignore identifier name differences when evaluating a duplicate block.")
+  val cpdIgnoreAnnotations =
+    settingKey[Boolean]("Ignore language annotations when evaluating a duplicate block.")
 
-  /** Minimum number of tokens of potential duplicates. Defaults to <code>100</code>.*/
-  val cpdMinimumTokens = SettingKey[Int]("cpd-minimum-tokens")
+  // TODO remove
+  val cpdClasspath = taskKey[Classpath]("cpd-classpath")
 
-  /** Source file encoding. Defaults to <code>"utf-8"</code>. */
-  val cpdSourceEncoding = SettingKey[String]("cpd-source-encoding")
+  // TODO remove
+  val cpdSourceSettings = taskKey[SourceSettings]("cpd-source-settings")
 
-  /** Language to analyze. Defaults to <code>Scala</code>.
-    * Note: There's currently no specific Scala tokenizer implemented in CPD. Using Scala
-    * as language will default to the "AnyLanguage" tokenizer. If you want Scala specifically,
-    * extend the CPD tokenizers! */
-  val cpdLanguage = SettingKey[Language]("cpd-language")
+  // TODO remove
+  val cpdReportSettings = taskKey[ReportSettings]("cpd-report-settings")
 
-  /** Type of CPD report. Defaults to <code>XML</code>. */
-  val cpdReportType = SettingKey[ReportType]("cpd-report-type")
-
-  /** Type of CPD output. Defaults to <code>File</code>. */
-  val cpdOutputType = SettingKey[OutputType]("cpd-output-type")
-
-  /** Ignore multiple copies of files of the same name and length in comparison. */
-  val cpdSkipDuplicateFiles = SettingKey[Boolean]("cpd-skip-duplicate-files")
-
-  /** Skip files which can't be tokenized due to invalid characters instead of aborting. */
-  val cpdSkipLexicalErrors = SettingKey[Boolean]("cpd-skip-lexical-errors")
-
-  /** Ignore literal value differences when evaluating a duplicate block. */
-  val cpdIgnoreLiterals = SettingKey[Boolean]("cpd-ignore-literals")
-
-  /** Ignore identifier name differences when evaluating a duplicate block. */
-  val cpdIgnoreIdentifiers = SettingKey[Boolean]("cpd-ignore-identifiers")
-
-  /** Ignore language annotations when evaluating a duplicate block. */
-  val cpdIgnoreAnnotations = SettingKey[Boolean]("cpd-ignore-annotations")
-
-  val cpdClasspath = TaskKey[Classpath]("cpd-classpath")
-
-  val cpdSourceSettings = TaskKey[SourceSettings]("cpd-source-settings")
-
-  val cpdReportSettings = TaskKey[ReportSettings]("cpd-report-settings")
-
-  val cpd = TaskKey[Unit]("cpd")
 }
