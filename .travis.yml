@@ -1,0 +1,26 @@
+language: scala
+sudo: false
+dist: trusty
+
+jdk:
+  - openjdk8
+
+cache:
+  directories:
+    - $HOME/.ivy2/cache
+    - $HOME/.sbt/boot/
+
+before_cache:
+  - find $HOME/.ivy2 -name "ivydata-*.properties" -delete
+  - find $HOME/.sbt -name "*.lock" -delete
+
+script:
+  - sbt "++${TRAVIS_SCALA_VERSION}" "^^${SBT_VERSION}" clean test scripted
+
+matrix:
+  include:
+  - env: SBT_VERSION="0.13.16"
+    scala: 2.10.6
+
+  - env: SBT_VERSION="1.0.2"
+    scala: 2.12.2
