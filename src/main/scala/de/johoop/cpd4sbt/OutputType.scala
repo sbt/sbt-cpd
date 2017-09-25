@@ -1,7 +1,7 @@
 /*
- * This file is part of cpd4sbt.
+ * This file is part of sbt-cpd
  *
- * Copyright (c) Joachim Hofer
+ * Copyright (c) Joachim Hofer & contributors
  * All rights reserved.
  *
  * This program and the accompanying materials
@@ -9,6 +9,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
+
 package de.johoop.cpd4sbt
 
 object OutputType extends Enumeration {
