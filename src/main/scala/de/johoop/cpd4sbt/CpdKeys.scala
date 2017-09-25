@@ -1,7 +1,7 @@
 /*
- * This file is part of cpd4sbt.
+ * This file is part of sbt-cpd
  *
- * Copyright (c) Joachim Hofer
+ * Copyright (c) Joachim Hofer & contributors
  * All rights reserved.
  *
  * This program and the accompanying materials
@@ -9,6 +9,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
+
 package de.johoop.cpd4sbt
 
 import java.io.File
@@ -21,13 +22,22 @@ import sbt.{TaskKey, SettingKey}
 
 trait CpdKeys {
   private[cpd4sbt] case class ReportSettings(
-    path: File, name: String, encoding: String,
-    format: ReportType, outputType: OutputType)
+      path: File,
+      name: String,
+      encoding: String,
+      format: ReportType,
+      outputType: OutputType)
 
   private[cpd4sbt] case class SourceSettings(
-    dirs: Seq[File], encoding: String, language: Language, minTokens: Int,
-    skipDuplicateFiles: Boolean, skipLexicalErrors: Boolean,
-    ignoreLiterals: Boolean, ignoreIdentifiers: Boolean, ignoreAnnotations: Boolean)
+      dirs: Seq[File],
+      encoding: String,
+      language: Language,
+      minTokens: Int,
+      skipDuplicateFiles: Boolean,
+      skipLexicalErrors: Boolean,
+      ignoreLiterals: Boolean,
+      ignoreIdentifiers: Boolean,
+      ignoreAnnotations: Boolean)
 
   /** Source files to analyze. Defaults to <code>unmanagedSourceDirectories</code>. */
   val cpdSourceDirectories = SettingKey[Seq[File]]("cpd-source-directories")

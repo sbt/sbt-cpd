@@ -1,7 +1,7 @@
 /*
- * This file is part of cpd4sbt.
- * 
- * Copyright (c) Joachim Hofer
+ * This file is part of sbt-cpd
+ *
+ * Copyright (c) Joachim Hofer & contributors
  * All rights reserved.
  *
  * This program and the accompanying materials
@@ -9,6 +9,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
+
 package de.johoop.cpd4sbt
 
 import sbt._
@@ -24,10 +25,8 @@ private[cpd4sbt] object Settings extends CpdKeys {
   val defaultSettings = Seq(
     ivyConfigurations += CpdConfig,
     libraryDependencies += "net.sourceforge.pmd" % "pmd-dist" % "5.4.2" % "cpd->default",
-
     cpdTargetPath := crossTarget.value / "cpd",
     cpdSourceDirectories in Compile := { (unmanagedSourceDirectories in Compile).value },
-
     cpdReportName := "cpd.xml",
     cpdMaxMemoryInMB := 512,
     cpdMinimumTokens := 100,
@@ -41,9 +40,7 @@ private[cpd4sbt] object Settings extends CpdKeys {
     cpdIgnoreLiterals := false,
     cpdIgnoreIdentifiers := false,
     cpdIgnoreAnnotations := false,
-
     cpdSourceSettings := { cpdSourceSettings.dependsOn(compile in Compile).value },
-
     cpdReportSettings :=
       ReportSettings(
         cpdTargetPath.value,
@@ -61,8 +58,8 @@ private[cpd4sbt] object Settings extends CpdKeys {
         cpdSkipLexicalErrors.value,
         cpdIgnoreLiterals.value,
         cpdIgnoreIdentifiers.value,
-        cpdIgnoreAnnotations.value),
-
+        cpdIgnoreAnnotations.value
+      ),
     cpdClasspath := Classpaths managedJars (CpdConfig, classpathTypes value, update value)
   )
 }

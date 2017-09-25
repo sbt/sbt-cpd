@@ -1,7 +1,7 @@
 /*
- * This file is part of cpd4sbt.
- * 
- * Copyright (c) Joachim Hofer
+ * This file is part of sbt-cpd
+ *
+ * Copyright (c) Joachim Hofer & contributors
  * All rights reserved.
  *
  * This program and the accompanying materials
@@ -9,6 +9,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
+
 package de.johoop.cpd4sbt
 
 object Language {
@@ -27,6 +28,6 @@ object Language {
   case object ECMAScript extends Language { val name = "ecmascript" }
   case object JavaScript extends Language { val name = "ecmascript" }
   case object PLSQL extends Language { val name = "plsql" }
-  
+
   case object Scala extends Language { val name = "scala" }
 }
