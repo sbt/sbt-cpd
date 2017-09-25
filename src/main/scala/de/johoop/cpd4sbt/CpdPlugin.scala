@@ -17,7 +17,7 @@ import Keys._
 import Compat.Process
 import sbt.plugins.JvmPlugin
 
-object CopyPasteDetector extends AutoPlugin {
+object CpdPlugin extends AutoPlugin {
 
   object autoImport extends CpdKeys
 
@@ -26,15 +26,56 @@ object CopyPasteDetector extends AutoPlugin {
   override def trigger: PluginTrigger = allRequirements
   override def requires: Plugins = JvmPlugin
 
-  override lazy val projectConfigurations = Seq(Settings.CpdConfig)
+  val CpdConfig = config("cpd") hide
+  override lazy val projectConfigurations = Seq(CpdConfig)
 
-  override lazy val projectSettings = Settings.defaultSettings :+
-    (cpd := cpdAction(
-      cpdReportSettings.value,
-      cpdSourceSettings.value,
-      cpdMaxMemoryInMB.value,
-      cpdClasspath.value,
-      streams.value))
+  override lazy val projectSettings =
+    Seq(
+      ivyConfigurations += CpdConfig,
+      libraryDependencies += "net.sourceforge.pmd" % "pmd-dist" % "5.4.2" % "cpd->default",
+      cpdTargetPath := crossTarget.value / "cpd",
+      cpdSourceDirectories in Compile := { (unmanagedSourceDirectories in Compile).value },
+      cpdReportName := "cpd.xml",
+      cpdMaxMemoryInMB := 512,
+      cpdMinimumTokens := 100,
+      cpdSourceEncoding := "utf-8",
+      cpdReportFileEncoding := "utf-8",
+      cpdLanguage := CpdLanguage.Scala,
+      cpdReportType := CpdReportType.XML,
+      cpdOutputType := CpdOutputType.File,
+      cpdSkipDuplicateFiles := false,
+      cpdSkipLexicalErrors := false,
+      cpdIgnoreLiterals := false,
+      cpdIgnoreIdentifiers := false,
+      cpdIgnoreAnnotations := false,
+      cpdSourceSettings := { cpdSourceSettings.dependsOn(compile in Compile).value },
+      cpdReportSettings :=
+        ReportSettings(
+          cpdTargetPath.value,
+          cpdReportName.value,
+          cpdReportFileEncoding.value,
+          cpdReportType.value,
+          cpdOutputType.value),
+      cpdSourceSettings :=
+        SourceSettings(
+          (cpdSourceDirectories in Compile).value,
+          cpdSourceEncoding.value,
+          cpdLanguage.value,
+          cpdMinimumTokens.value,
+          cpdSkipDuplicateFiles.value,
+          cpdSkipLexicalErrors.value,
+          cpdIgnoreLiterals.value,
+          cpdIgnoreIdentifiers.value,
+          cpdIgnoreAnnotations.value
+        ),
+      cpdClasspath := Classpaths managedJars (CpdConfig, classpathTypes value, update value),
+      cpd := cpdAction(
+        cpdReportSettings.value,
+        cpdSourceSettings.value,
+        cpdMaxMemoryInMB.value,
+        cpdClasspath.value,
+        streams.value)
+    )
 
   private def cpdAction(
       reportSettings: ReportSettings,
