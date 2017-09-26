@@ -10,7 +10,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  */
 
-package de.johoop.cpd4sbt.settings
+package com.github.sbt.cpd.settings
 
 object CpdLanguage {
   sealed abstract class Language(val name: String)

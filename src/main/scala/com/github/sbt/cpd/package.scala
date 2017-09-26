@@ -10,15 +10,15 @@
  * http://www.eclipse.org/legal/epl-v10.html
  */
 
-package de.johoop
+package com.github.sbt
 
 import java.io.File
 
-import de.johoop.cpd4sbt.settings.CpdLanguage.Language
-import de.johoop.cpd4sbt.settings.CpdOutputType.OutputType
-import de.johoop.cpd4sbt.settings.CpdReportType.ReportType
+import com.github.sbt.cpd.settings.CpdLanguage.Language
+import com.github.sbt.cpd.settings.CpdOutputType.OutputType
+import com.github.sbt.cpd.settings.CpdReportType.ReportType
 
-package object cpd4sbt {
+package object cpd {
   case class ReportSettings(path: File, name: String, encoding: String, format: ReportType, outputType: OutputType)
 
   case class SourceSettings(

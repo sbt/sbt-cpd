@@ -10,7 +10,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  */
 
-package de.johoop.cpd4sbt
+package com.github.sbt.cpd
 
 import sbt.Keys._
 import sbt._

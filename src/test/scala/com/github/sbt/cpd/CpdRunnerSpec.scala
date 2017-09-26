@@ -10,9 +10,9 @@
  * http://www.eclipse.org/legal/epl-v10.html
  */
 
-package de.johoop.cpd4sbt
+package com.github.sbt.cpd
 
-import de.johoop.cpd4sbt.settings.{CpdLanguage, CpdOutputType, CpdReportType}
+import com.github.sbt.cpd.settings.{CpdLanguage, CpdOutputType, CpdReportType}
 import org.scalatest.{Matchers, WordSpec}
 import sbt._
 
@@ -32,9 +32,13 @@ class CpdRunnerSpec extends WordSpec with Matchers {
     CpdOutputType.File
   )
 
-  private val srcDir = file("src") / "main" / "scala"
+  private val srcDir1 = file("src") / "main" / "scala"
+  private val srcDir2 = file("src") / "test" / "scala"
+  // srcDir3 should get ignored
+  private val srcDir3 = file("src") / "main" / "scala-extra"
+
   private val defaultSource = SourceSettings(
-    Seq(srcDir),
+    Seq(srcDir1),
     "UTF-8",
     CpdLanguage.Scala,
     100,
@@ -58,14 +62,16 @@ class CpdRunnerSpec extends WordSpec with Matchers {
           "--encoding",
           "UTF-8",
           "--format",
-          "net.sourceforge.pmd.cpd.XMLRenderer"
+          "net.sourceforge.pmd.cpd.XMLRenderer",
+          "--files",
+          srcDir1.absolutePath
         )
       }
     }
 
     "with source settings" should {
       val source = SourceSettings(
-        Seq(srcDir),
+        Seq(srcDir1, srcDir2, srcDir3),
         "ISO-8559-1",
         CpdLanguage.Java,
         50,
@@ -91,7 +97,11 @@ class CpdRunnerSpec extends WordSpec with Matchers {
           "--skip-lexical-errors",
           "--ignore-literals",
           "--ignore-identifiers",
-          "--ignore-annotations"
+          "--ignore-annotations",
+          "--files",
+          srcDir1.absolutePath,
+          "--files",
+          srcDir2.absolutePath
         )
       }
     }
@@ -115,7 +125,9 @@ class CpdRunnerSpec extends WordSpec with Matchers {
           "--encoding",
           "UTF-8",
           "--format",
-          "net.sourceforge.pmd.cpd.CSVRenderer"
+          "net.sourceforge.pmd.cpd.CSVRenderer",
+          "--files",
+          srcDir1.absolutePath
         )
       }
     }

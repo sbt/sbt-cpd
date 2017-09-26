@@ -10,11 +10,11 @@
  * http://www.eclipse.org/legal/epl-v10.html
  */
 
-package de.johoop.cpd4sbt
+package com.github.sbt.cpd
 
 import java.io.{File, FileOutputStream}
 
-import de.johoop.cpd4sbt.CpdPlugin.autoImport.CpdOutputType
+import com.github.sbt.cpd.CpdPlugin.autoImport.CpdOutputType
 import sbt.Keys._
 import sbt._
 
@@ -48,7 +48,7 @@ object CpdRunner {
     executeCommandLine(cmd, javaHome, streams.log, dest)
   }
 
-  private[cpd4sbt] def buildCommandLine(
+  private[cpd] def buildCommandLine(
       cpdClasspath: Classpath,
       report: ReportSettings,
       source: SourceSettings,
@@ -78,7 +78,7 @@ object CpdRunner {
       "--encoding",
       source.encoding
     ) ++
-      source.dirs.filter(_.isDirectory).flatMap(file => List("--files", file.getPath)) ++
+      source.dirs.filter(_.isDirectory).flatMap(file => List("--files", file.absolutePath)) ++
       booleanArgs(
         "--skip-duplicate-files" -> source.skipDuplicateFiles,
         "--skip-lexical-errors" -> source.skipLexicalErrors,
