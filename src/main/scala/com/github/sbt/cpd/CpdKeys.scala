@@ -10,13 +10,13 @@
  * http://www.eclipse.org/legal/epl-v10.html
  */
 
-package de.johoop.cpd4sbt
+package com.github.sbt.cpd
 
 import java.io.File
 
-import de.johoop.cpd4sbt.settings.CpdLanguage.Language
-import de.johoop.cpd4sbt.settings.CpdOutputType.OutputType
-import de.johoop.cpd4sbt.settings.CpdReportType.ReportType
+import com.github.sbt.cpd.settings.CpdLanguage.Language
+import com.github.sbt.cpd.settings.CpdOutputType.OutputType
+import com.github.sbt.cpd.settings.CpdReportType.ReportType
 import sbt._
 
 object CpdKeys extends CpdKeys

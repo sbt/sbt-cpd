@@ -10,11 +10,13 @@
  * http://www.eclipse.org/legal/epl-v10.html
  */
 
-package de.johoop.cpd4sbt.settings
+package com.github.sbt.cpd.settings
 
-object CpdOutputType {
-  sealed trait OutputType
+object CpdReportType {
+  sealed abstract class ReportType(val name: String)
 
-  case object File extends OutputType
-  case object Console extends OutputType
+  case object Simple extends ReportType("Simple")
+  case object VS extends ReportType("VS")
+  case object XML extends ReportType("XML")
+  case object CSV extends ReportType("CSV")
 }

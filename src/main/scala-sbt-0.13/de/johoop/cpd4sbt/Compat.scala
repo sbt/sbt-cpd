@@ -1,4 +1,4 @@
-package de.johoop.cpd4sbt
+package com.github.sbt.cpd
 
 object Compat {
   val Process = sbt.Process
