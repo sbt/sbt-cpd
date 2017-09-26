@@ -42,10 +42,12 @@ object CpdPlugin extends AutoPlugin {
       cpdIgnoreLiterals := false,
       cpdIgnoreIdentifiers := false,
       cpdIgnoreAnnotations := false,
+      cpdFailOnDuplicates := false,
       cpd := CpdRunner.runCpd(
         cpdReportSettings.value,
         cpdSourceSettings.value,
         cpdMaxMemoryInMB.value,
+        cpdFailOnDuplicates.value,
         cpdClasspath.value,
         javaHome.value,
         streams.value)

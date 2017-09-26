@@ -29,6 +29,7 @@ object CpdRunner {
       report: ReportSettings,
       source: SourceSettings,
       maxMem: Int,
+      failOnDuplicates: Boolean,
       cpdClasspath: Classpath,
       javaHome: Option[File],
       streams: TaskStreams): Unit = {
@@ -45,7 +46,7 @@ object CpdRunner {
         None
     }
 
-    executeCommandLine(cmd, javaHome, streams.log, dest)
+    executeCommandLine(cmd, failOnDuplicates, javaHome, streams.log, dest)
   }
 
   private[cpd] def buildCommandLine(
@@ -101,41 +102,41 @@ object CpdRunner {
 
   private def executeCommandLine(
       commandLine: Seq[String],
+      failOnDuplicates: Boolean,
       javaHome: Option[File],
       log: Logger,
       destFile: Option[File]): Unit = {
 
-    try {
-      val output = destFile match {
-        case Some(f) =>
-          // TODO close
-          Some(CustomOutput(new FileOutputStream(f)))
-        case None =>
-          Some(LoggedOutput(log))
-      }
+    val output = destFile match {
+      case Some(f) =>
+        // TODO close
+        Some(CustomOutput(new FileOutputStream(f)))
+      case None =>
+        Some(LoggedOutput(log))
+    }
 
-      val forkOptions = ForkOptions(
-        javaHome,
-        output,
-        Vector.empty[File],
-        None,
-        Vector.empty[String],
-        connectInput = false,
-        Map.empty[String, String])
+    val forkOptions = ForkOptions(
+      javaHome,
+      output,
+      Vector.empty[File],
+      None,
+      Vector.empty[String],
+      connectInput = false,
+      Map.empty[String, String])
 
-      val exitValue = Fork.java(forkOptions, commandLine)
+    val exitValue = Fork.java(forkOptions, commandLine)
 
-      exitValue match {
-        case CpdExitOk => // pass with no duplicates
-        case CpdExitDuplicatesFound =>
-          // duplicates found
-          // TODO fail
-        case e =>
-          sys.error(s"Nonzero exit value when attempting to call CPD: $e")
-      }
-    } catch {
-      case NonFatal(e) =>
-        sys.error(s"Exception while executing CPD: ${e.getMessage}")
+    exitValue match {
+      case CpdExitOk => // pass with no duplicates
+
+      case CpdExitDuplicatesFound =>
+        // duplicates found
+        if (failOnDuplicates) {
+          sys.error("CPD check failed - duplicate code detected")
+        }
+
+      case e =>
+        sys.error(s"Nonzero exit value when attempting to call CPD: $e")
     }
   }
 }
