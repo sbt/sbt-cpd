@@ -25,13 +25,8 @@ object CpdPlugin extends AutoPlugin {
   override def trigger: PluginTrigger = allRequirements
   override def requires: Plugins = JvmPlugin
 
-  val CpdConfig = config("cpd").hide
-  override lazy val projectConfigurations = Seq(CpdConfig)
-
   override lazy val projectSettings =
     Seq(
-      ivyConfigurations += CpdConfig,
-      libraryDependencies += "net.sourceforge.pmd" % "pmd-dist" % "5.4.2" % "cpd->default",
       cpdTargetPath := crossTarget.value / "cpd",
       cpdSourceDirectories in Compile := { (unmanagedSourceDirectories in Compile).value },
       cpdReportName := "cpd.xml",
@@ -47,27 +42,6 @@ object CpdPlugin extends AutoPlugin {
       cpdIgnoreLiterals := false,
       cpdIgnoreIdentifiers := false,
       cpdIgnoreAnnotations := false,
-      cpdSourceSettings := { cpdSourceSettings.dependsOn(compile in Compile).value },
-      cpdReportSettings :=
-        ReportSettings(
-          cpdTargetPath.value,
-          cpdReportName.value,
-          cpdReportFileEncoding.value,
-          cpdReportType.value,
-          cpdOutputType.value),
-      cpdSourceSettings :=
-        SourceSettings(
-          (cpdSourceDirectories in Compile).value,
-          cpdSourceEncoding.value,
-          cpdLanguage.value,
-          cpdMinimumTokens.value,
-          cpdSkipDuplicateFiles.value,
-          cpdSkipLexicalErrors.value,
-          cpdIgnoreLiterals.value,
-          cpdIgnoreIdentifiers.value,
-          cpdIgnoreAnnotations.value
-        ),
-      cpdClasspath := Classpaths.managedJars(CpdConfig, classpathTypes.value, update.value),
       cpd := CpdRunner.runCpd(
         cpdReportSettings.value,
         cpdSourceSettings.value,
@@ -76,4 +50,32 @@ object CpdPlugin extends AutoPlugin {
         javaHome.value,
         streams.value)
     )
+
+  private lazy val cpdClasspath = Def.task {
+    // TODO is this the best way?
+    Project.extract(state.value).currentUnit.unit.plugins.fullClasspath
+  }
+
+  private lazy val cpdSourceSettings = Def.task {
+    SourceSettings(
+      (cpdSourceDirectories in Compile).value,
+      cpdSourceEncoding.value,
+      cpdLanguage.value,
+      cpdMinimumTokens.value,
+      cpdSkipDuplicateFiles.value,
+      cpdSkipLexicalErrors.value,
+      cpdIgnoreLiterals.value,
+      cpdIgnoreIdentifiers.value,
+      cpdIgnoreAnnotations.value
+    )
+  }
+
+  private lazy val cpdReportSettings = Def.task {
+    ReportSettings(
+      cpdTargetPath.value,
+      cpdReportName.value,
+      cpdReportFileEncoding.value,
+      cpdReportType.value,
+      cpdOutputType.value)
+  }
 }

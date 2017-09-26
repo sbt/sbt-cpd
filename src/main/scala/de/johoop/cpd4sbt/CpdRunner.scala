@@ -35,7 +35,7 @@ object CpdRunner {
 
     val cmd = buildCommandLine(cpdClasspath, report, source, maxMem)
 
-    streams.log.debug("Executing FindBugs command line.")
+    streams.log.debug("Executing CPD command line.")
 
     val dest = report.outputType match {
       case CpdOutputType.File =>
@@ -44,8 +44,6 @@ object CpdRunner {
       case _ =>
         None
     }
-
-    println(s"CMD: ${cmd.mkString("\n")}")
 
     executeCommandLine(cmd, javaHome, streams.log, dest)
   }
