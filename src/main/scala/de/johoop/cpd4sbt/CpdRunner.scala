@@ -22,6 +22,8 @@ import scala.util.control.NonFatal
 
 object CpdRunner {
   private val CpdMainClass = "net.sourceforge.pmd.cpd.CPD"
+  private val CpdExitOk = 0
+  private val CpdExitDuplicatesFound = 4
 
   def runCpd(
       report: ReportSettings,
@@ -42,6 +44,8 @@ object CpdRunner {
       case _ =>
         None
     }
+
+    println(s"CMD: ${cmd.mkString("\n")}")
 
     executeCommandLine(cmd, javaHome, streams.log, dest)
   }
@@ -76,6 +80,7 @@ object CpdRunner {
       "--encoding",
       source.encoding
     ) ++
+      source.dirs.filter(_.isDirectory).flatMap(file => List("--files", file.getPath)) ++
       booleanArgs(
         "--skip-duplicate-files" -> source.skipDuplicateFiles,
         "--skip-lexical-errors" -> source.skipLexicalErrors,
@@ -122,11 +127,17 @@ object CpdRunner {
 
       val exitValue = Fork.java(forkOptions, commandLine)
 
-      if (exitValue != 0) {
-        sys.error("Nonzero exit value when attempting to call CPD: " + exitValue)
+      exitValue match {
+        case CpdExitOk => // pass with no duplicates
+        case CpdExitDuplicatesFound =>
+          // duplicates found
+          // TODO fail
+        case e =>
+          sys.error(s"Nonzero exit value when attempting to call CPD: $e")
       }
     } catch {
-      case NonFatal(e) => sys.error("Exception while executing CPD: %s".format(e.getMessage))
+      case NonFatal(e) =>
+        sys.error(s"Exception while executing CPD: ${e.getMessage}")
     }
   }
 }
