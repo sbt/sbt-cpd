@@ -58,6 +58,9 @@ trait CpdKeys {
   val cpdIgnoreAnnotations =
     settingKey[Boolean]("Ignore language annotations when evaluating a duplicate block.")
 
+  val cpdFailOnDuplicates =
+    settingKey[Boolean]("Fail the build if duplicates are detected.")
+
   // type aliases for auto import
   val CpdLanguage: settings.CpdLanguage.type = settings.CpdLanguage
   val CpdOutputType: settings.CpdOutputType.type = settings.CpdOutputType

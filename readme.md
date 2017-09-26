@@ -122,6 +122,12 @@ The settings specified below are still mostly valid, but they're now specified u
 * *Accepts:* `Boolean`
 * *Default:* `false`
 
+### `cpdFailOnDuplicates`
+
+* *Description:* Fail the build if duplicates are detected.
+* *Accepts:* `Boolean`
+* *Default:* `false`
+
 ## Contributors
 
 Many thanks to
