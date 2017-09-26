@@ -17,7 +17,6 @@ import java.io.File
 import de.johoop.cpd4sbt.settings.CpdLanguage.Language
 import de.johoop.cpd4sbt.settings.CpdOutputType.OutputType
 import de.johoop.cpd4sbt.settings.CpdReportType.ReportType
-import sbt.Keys._
 import sbt._
 
 object CpdKeys extends CpdKeys
@@ -58,15 +57,6 @@ trait CpdKeys {
     settingKey[Boolean]("Ignore identifier name differences when evaluating a duplicate block.")
   val cpdIgnoreAnnotations =
     settingKey[Boolean]("Ignore language annotations when evaluating a duplicate block.")
-
-  // TODO remove
-  val cpdClasspath = taskKey[Classpath]("cpd-classpath")
-
-  // TODO remove
-  val cpdSourceSettings = taskKey[SourceSettings]("cpd-source-settings")
-
-  // TODO remove
-  val cpdReportSettings = taskKey[ReportSettings]("cpd-report-settings")
 
   // type aliases for auto import
   val CpdLanguage: settings.CpdLanguage.type = settings.CpdLanguage
