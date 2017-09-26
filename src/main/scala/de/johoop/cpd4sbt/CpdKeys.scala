@@ -23,24 +23,6 @@ import sbt._
 object CpdKeys extends CpdKeys
 
 trait CpdKeys {
-  private[cpd4sbt] case class ReportSettings(
-      path: File,
-      name: String,
-      encoding: String,
-      format: ReportType,
-      outputType: OutputType)
-
-  private[cpd4sbt] case class SourceSettings(
-      dirs: Seq[File],
-      encoding: String,
-      language: Language,
-      minTokens: Int,
-      skipDuplicateFiles: Boolean,
-      skipLexicalErrors: Boolean,
-      ignoreLiterals: Boolean,
-      ignoreIdentifiers: Boolean,
-      ignoreAnnotations: Boolean)
-
   val cpd = taskKey[Unit]("Run CPD analysis")
 
   val cpdSourceDirectories =
