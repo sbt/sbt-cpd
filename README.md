@@ -1,8 +1,9 @@
 # sbt-cpd - Copy & Paste Detection using PMD/CPD for sbt
 
 [![Build Status](https://travis-ci.org/sbt/sbt-cpd.svg?branch=master)](https://travis-ci.org/sbt/sbt-cpd)
-[![SBT 0.13 version](https://img.shields.io/badge/sbt_0.13-2.0.0--M2-blue.svg)](https://bintray.com/stringbean/sbt-plugins/sbt-cpd)
-[![SBT 1.0 version](https://img.shields.io/badge/sbt_1.0-2.0.0--M2-blue.svg)](https://bintray.com/stringbean/sbt-plugins/sbt-cpd)
+[![sbt 0.13 version](https://img.shields.io/badge/sbt_0.13-2.0.0--M2-blue.svg)](https://bintray.com/stringbean/sbt-plugins/sbt-cpd)
+[![sbt 1.0 version](https://img.shields.io/badge/sbt_1.0-2.0.0--M2-blue.svg)](https://bintray.com/stringbean/sbt-plugins/sbt-cpd)
+![pmd version](https://img.shields.io/badge/pmd_version-5.8.1-red.svg)
 
 This is an [sbt](http://scala-sbt.org/) plugin for duplicate code detection using
 [Copy/Paste Detector](https://pmd.github.io/latest/usage/cpd-usage.html) (CPD) from the [PMD](https://pmd.github.io)
@@ -19,7 +20,7 @@ containing the duplicates to `target/scala-2.xx/cpd/cpd.xml`.
 
 ## Settings
 
-(see also the [CPD documentation](https://pmd.github.io/pmd-5.4.2/usage/cpd-usage.html))
+(see also the [CPD documentation](https://pmd.github.io/pmd-5.8.1/usage/cpd-usage.html))
 
 | Key                     | Type              | Default             | Description |
 | ----------------------- | ----------------- | ------------------- | ----------- |
@@ -73,4 +74,5 @@ for their awesome contributions!
 
 ## License
 
-This program and the accompanying materials are made available under the terms of the **Eclipse Public License v1.0** which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html
+This program and the accompanying materials are made available under the terms of the **Eclipse Public License v1.0**
+which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html
