@@ -1,8 +1,8 @@
 # sbt-cpd - Copy & Paste Detection using PMD/CPD for sbt
 
 [![Build Status](https://travis-ci.org/sbt/sbt-cpd.svg?branch=master)](https://travis-ci.org/sbt/sbt-cpd)
-[![sbt 0.13 version](https://img.shields.io/badge/sbt_0.13-2.0.0--M3-blue.svg)](https://bintray.com/stringbean/sbt-plugins/sbt-cpd)
-[![sbt 1.0 version](https://img.shields.io/badge/sbt_1.0-2.0.0--M3-blue.svg)](https://bintray.com/stringbean/sbt-plugins/sbt-cpd)
+[![sbt 0.13 version](https://img.shields.io/badge/sbt_0.13-2.0.0-blue.svg)](https://bintray.com/stringbean/sbt-plugins/sbt-cpd)
+[![sbt 1.0 version](https://img.shields.io/badge/sbt_1.0-2.0.0-blue.svg)](https://bintray.com/stringbean/sbt-plugins/sbt-cpd)
 ![pmd version](https://img.shields.io/badge/pmd_version-5.8.1-red.svg)
 
 This is an [sbt](http://scala-sbt.org/) plugin for duplicate code detection using
