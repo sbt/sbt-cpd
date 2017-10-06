@@ -12,6 +12,7 @@
 
 package com.github.sbt.cpd.settings
 
+// scalastyle:off number.of.methods number.of.types
 object CpdLanguage {
   sealed abstract class Language(val name: String)
 

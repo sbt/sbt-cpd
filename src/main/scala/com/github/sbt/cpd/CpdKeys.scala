@@ -61,8 +61,10 @@ trait CpdKeys {
   val cpdFailOnDuplicates =
     settingKey[Boolean]("Fail the build if duplicates are detected.")
 
+  // scalastyle:off field.name
   // type aliases for auto import
   val CpdLanguage: settings.CpdLanguage.type = settings.CpdLanguage
   val CpdOutputType: settings.CpdOutputType.type = settings.CpdOutputType
   val CpdReportType: settings.CpdReportType.type = settings.CpdReportType
+  // scalastyle:on
 }

@@ -20,7 +20,7 @@ object CpdPlugin extends AutoPlugin {
 
   object autoImport extends CpdKeys
 
-  import autoImport._
+  import autoImport._ // scalastyle:ignore import.grouping
 
   override def trigger: PluginTrigger = allRequirements
   override def requires: Plugins = JvmPlugin
