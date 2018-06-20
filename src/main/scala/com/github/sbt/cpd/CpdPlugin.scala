@@ -28,7 +28,7 @@ object CpdPlugin extends AutoPlugin {
   override lazy val projectSettings =
     Seq(
       cpdTargetPath := crossTarget.value / "cpd",
-      cpdSourceDirectories in Compile := { (unmanagedSourceDirectories in Compile).value },
+      cpdSourceDirectories in Compile := { (unmanagedSourceDirectories in Compile).value.distinct },
       cpdReportName := "cpd.xml",
       cpdMaxMemoryInMB := 512,
       cpdMinimumTokens := 100,
