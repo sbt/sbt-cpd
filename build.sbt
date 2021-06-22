@@ -15,7 +15,8 @@ scalacOptions ++= Seq(
   "-Ywarn-dead-code")
 
 libraryDependencies ++= Seq(
-  "net.sourceforge.pmd" %  "pmd-dist"   % "5.8.1",
+  "net.sourceforge.pmd" %  "pmd-core"   % "6.35.0",
+  "net.sourceforge.pmd" %  "pmd-java"   % "6.35.0",
   "org.scalatest"       %% "scalatest"  % "3.0.4"   % "test"
 )
 
